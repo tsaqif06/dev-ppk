@@ -36,7 +36,6 @@ class PreRegisterRequestStore extends FormRequest
                 Rule::excludeIf(fn() => request()->input('pemohon') == 'perorangan'),
                 Rule::in(['INDUK', 'CABANG']),
             ],
-            'upt' => ['nullable', new UptRule],
             'nama' => 'required|max:255',
             'email' => [
                 'required',
