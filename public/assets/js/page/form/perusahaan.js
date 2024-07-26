@@ -115,14 +115,14 @@ $("#button-pendukung").click(function () {
                 table_dokumen_pendukung.draw();
                 $("#form-pendukung").trigger("reset");
                 $(".dropify-clear").trigger("click");
-                $("#button-pendukung").removeClass("disabled").html("tambah");
+                $("#button-pendukung").removeClass("disabled").html("Tambah");
             } else {
                 notif("error", response.message);
-                $("#button-pendukung").removeClass("disabled").html("tambah");
+                $("#button-pendukung").removeClass("disabled").html("Tambah");
             }
         },
         error: function (response) {
-            $("#button-pendukung").removeClass("disabled").html("tambah");
+            $("#button-pendukung").removeClass("disabled").html("Tambah");
             var respon = response.responseJSON;
             var error = respon.errors;
             if (respon && error) {

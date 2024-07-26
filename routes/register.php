@@ -26,7 +26,6 @@ Route::prefix('register')->name('register.')->middleware('guest')->group(functio
         Route::post('perusahaan/{id}', [RegisterController::class, 'StoreRegisterPerusahaan'])->name('perusahaan');
     });
 
-
     /* dokumen pendukung route handler */
     Route::prefix('pendukung')->name('pendukung.')->group(function () {
         Route::get('datatable/{id}', [RegisterController::class, 'DokumenPendukungDataTable'])->name('datatable');

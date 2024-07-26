@@ -13,23 +13,26 @@
                      <label for="jenis_identitas" class="col-md-3 col-sm-3 col-xs-12 col-form-label">Jenis
                          Identitas</label>
                      <div class="col">
-                         <select class="form-control select-item" type="text" placeholder="Jenis Identitas" id="jenis_identitas_mitra" name="jenis_identitas_mitra">
+                         <select class="form-control select-item" type="text" placeholder="Jenis Identitas"
+                             id="jenis_identitas_mitra" name="jenis_identitas_mitra">
                              <option value="">select item</option>
                              <option value="PASSPORT">PASSPORT</option>
                              <option value="KTP">KTP</option>
-                             <option value="NPWP">NPWP 16 DIGIT</option>
+                             <option value="NPWP" selected>NPWP 16 DIGIT</option>
                          </select>
                          <div class="invalid-feedback" id="jenis_identitas_mitra-feedback"></div>
                      </div>
                      <div class="col">
-                         <input class="form-control" type="number" placeholder="Nomor Identitas" id="nomor_identitas_mitra" name="nomor_identitas_mitra" value="">
+                         <input class="form-control" type="number" placeholder="Nomor Identitas"
+                             id="nomor_identitas_mitra" name="nomor_identitas_mitra" value="" maxlength="16" pattern="\d*" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                          <div class="invalid-feedback" id="nomor_identitas_mitra-feedback"></div>
                      </div>
                  </div>
                  <div class="row mb-3">
                      <label for="upt" class="col-sm-3 col-form-label">Telepon</label>
                      <div class="col-sm-9">
-                         <input type="text" class="form-control" id="telepon_mitra" name="telepon_mitra" aria-describedby="inputGroupPrepend" required value="">
+                         <input type="text" class="form-control" id="telepon_mitra" name="telepon_mitra"
+                             aria-describedby="inputGroupPrepend" required value="">
                          <div class="invalid-feedback" id="telepon_mitra-feedback"></div>
                      </div>
                  </div>
@@ -37,7 +40,8 @@
                  <div class="row mb-3">
                      <label for="negara" class="col-md-3 col-form-label">Negara</label>
                      <div class="col-md-9">
-                         <select class="form-control negara-select" type="text" placeholder="Negara" id="negara" name="negara"></select>
+                         <select class="form-control negara-select" type="text" placeholder="Negara" id="negara"
+                             name="negara"></select>
                          <div class="invalid-feedback" id="negara-feedback"></div>
                      </div>
                  </div>
@@ -45,7 +49,8 @@
                  <div class="row mb-3 d-none" id="provinsi-input-select">
                      <label for="provinsi" class="col-md-3 col-form-label">Provinsi</label>
                      <div class="col-md-9">
-                         <select class="form-control provinsi-select" type="text" placeholder="Provinsi" id="provinsi" name="provinsi"></select>
+                         <select class="form-control provinsi-select" type="text" placeholder="Provinsi"
+                             id="provinsi" name="provinsi"></select>
                          <div class="invalid-feedback" id="provinsi-feedback"></div>
                      </div>
                  </div>
@@ -53,7 +58,8 @@
                  <div class="row mb-3 d-none" id="kabupaten-input-select">
                      <label for="kabupaten" class="col-md-3 col-form-label">Kabupaten</label>
                      <div class="col-md-9">
-                         <select class="form-control kota-select" type="text" placeholder="Kabupaten" id="kabupaten_kota" name="kabupaten_kota"></select>
+                         <select class="form-control kota-select" type="text" placeholder="Kabupaten"
+                             id="kabupaten_kota" name="kabupaten_kota"></select>
                          <div class="invalid-feedback" id="kabupaten_kota-feedback"></div>
                      </div>
                  </div>
@@ -73,7 +79,8 @@
  </div>
  <div class="modal-footer">
      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-     <button type="button" class="btn btn-success" id="button-submit" onclick="submit('{{ route('barantin.mitra.store') }}',false)">Submit</button>
+     <button type="button" class="btn btn-success" id="button-submit"
+         onclick="submit('{{ route('barantin.mitra.store') }}',false)">Submit</button>
  </div>
  <script>
      NegaraSelect(99, true)
