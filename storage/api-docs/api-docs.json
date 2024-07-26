@@ -1,0 +1,1340 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Dokumentasi API Barantin",
+        "description": "Data Request",
+        "contact": {
+            "email": "nandaputraservice@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/v1",
+            "description": "Api Admin Barantin"
+        },
+        {
+            "url": "http://localhost:8000/api/v2",
+            "description": "Api User Barantin Test"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication Admin"
+                ],
+                "summary": "Login User Barantin",
+                "description": "Admin Access Login with   endpoint '/api/v1' ",
+                "operationId": "userLogin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "description": "Username for login",
+                                        "type": "string",
+                                        "default": "userpusat"
+                                    },
+                                    "password": {
+                                        "description": "Password for login",
+                                        "type": "string",
+                                        "format": "password",
+                                        "default": "rahasia1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "description": "Status of the response",
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "code": {
+                                            "description": "HTTP status code",
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "description": "Message of the response",
+                                            "type": "string",
+                                            "example": "Login Successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "User ID",
+                                                    "type": "string",
+                                                    "example": "(example)"
+                                                },
+                                                "nama": {
+                                                    "description": "User's name",
+                                                    "type": "string",
+                                                    "example": "test oke"
+                                                },
+                                                "email": {
+                                                    "description": "User's name",
+                                                    "type": "string",
+                                                    "example": "email@example.com"
+                                                },
+                                                "role": {
+                                                    "description": "User's role",
+                                                    "type": "string",
+                                                    "example": "cabang"
+                                                },
+                                                "status_user": {
+                                                    "description": "User's status",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "created_at": {
+                                                    "description": "User's creation date",
+                                                    "type": "string",
+                                                    "example": "2024-03-29T09:59:40.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "description": "User's last update date",
+                                                    "type": "string",
+                                                    "example": "2024-03-29T11:10:09.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "token": {
+                                            "description": "Access token",
+                                            "type": "string",
+                                            "example": "(example)"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "description": "Status of the response",
+                                            "type": "string",
+                                            "example": "failed"
+                                        },
+                                        "code": {
+                                            "description": "HTTP status code",
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "message": {
+                                            "description": "Error message",
+                                            "type": "string",
+                                            "example": "validation failed"
+                                        },
+                                        "error": {
+                                            "description": "Validation errors",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "The username field is required.",
+                                                "The password field is required."
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "get": {
+                "tags": [
+                    "Authentication Admin"
+                ],
+                "summary": "Logout user",
+                "description": "Logout the authenticated user",
+                "operationId": "31b719d28ebeef38c025490fa70352e8",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/refresh": {
+            "get": {
+                "tags": [
+                    "Authentication Admin"
+                ],
+                "summary": "Refresh JWT token",
+                "description": "Refresh the JWT token",
+                "operationId": "c5603b64ee034f6495bb3534c5fbf877",
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/barantin/{take}": {
+            "get": {
+                "tags": [
+                    "Barantin Admin"
+                ],
+                "summary": "Dapatkan Data Barantin",
+                "description": "Mengambil data Barantin menggunakan parameter take",
+                "operationId": "getAllDataBarantin",
+                "parameters": [
+                    {
+                        "name": "take",
+                        "in": "path",
+                        "description": "Jumlah data yang akan diambil",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "barantin data by id"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "john.doe@example.com"
+                                                },
+                                                "no_hp": {
+                                                    "type": "string",
+                                                    "example": "08123456789"
+                                                },
+                                                "alamat": {
+                                                    "type": "string",
+                                                    "example": "Jl. Sudirman No. 123"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2023-02-28 12:34:56"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2023-02-28 12:34:56"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "data not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/barantin/{npwp}/cabang": {
+            "get": {
+                "tags": [
+                    "Barantin Admin"
+                ],
+                "summary": "Dapatkan Data Barantin Perusahaan Cabang",
+                "description": "Mengambil data Barantin Perusahaan Cabang",
+                "operationId": "getAllDataBarantinPerusahaanCabang",
+                "parameters": [
+                    {
+                        "name": "npwp",
+                        "in": "path",
+                        "description": "Jumlah data yang ingin diambil",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "barantin data perusahaan cabang"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "nama": {
+                                                        "type": "string",
+                                                        "example": "John Doe"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "john.doe@example.com"
+                                                    },
+                                                    "no_hp": {
+                                                        "type": "string",
+                                                        "example": "08123456789"
+                                                    },
+                                                    "alamat": {
+                                                        "type": "string",
+                                                        "example": "Jl. Sudirman No. 123"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-28 12:34:56"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-28 12:34:56"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "data not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/barantin/{register_id}/register": {
+            "get": {
+                "tags": [
+                    "Barantin Admin"
+                ],
+                "summary": "Get Barantin Data By Register ID",
+                "description": "Get Barantin Data By Register ID",
+                "operationId": "d60500c4bf47725ade56f02e7675ce5f",
+                "parameters": [
+                    {
+                        "name": "register_id",
+                        "in": "path",
+                        "description": "Register ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/barantin/{barantin_id}/detil": {
+            "get": {
+                "tags": [
+                    "Barantin Admin"
+                ],
+                "summary": "Get Barantin Data Detail By Barantin ID",
+                "description": "Get Barantin Data Detail By Barantin ID",
+                "operationId": "77c5c941928dd6ca699f425021850623",
+                "parameters": [
+                    {
+                        "name": "barantin_id",
+                        "in": "path",
+                        "description": "Barantin ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/mitra/{barantin_id}/barantin": {
+            "get": {
+                "tags": [
+                    "Mitra Admin"
+                ],
+                "summary": "Semua Data Mitra Perusahaan induk / Perusahaan Cabang / Perorangan Berdasarkan ID Barantin / ID Barantin Cabang",
+                "description": "Semua Data Mitra Perusahaan Berdasarkan ID Barantin endpoint: '/barantin/{barantin_id}/mitra' barantin_id  adalah ID Barantin",
+                "operationId": "GetAllDataMitraBybarantinID",
+                "parameters": [
+                    {
+                        "name": "barantin_id",
+                        "in": "path",
+                        "description": "ID Barantin",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "barantin mitra data"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "nama": {
+                                                        "type": "string",
+                                                        "example": "PT. Mitra Sejahtera"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "mitra.sejahtera@example.com"
+                                                    },
+                                                    "no_hp": {
+                                                        "type": "string",
+                                                        "example": "08123456789"
+                                                    },
+                                                    "alamat": {
+                                                        "type": "string",
+                                                        "example": "Jl. Sudirman No. 123"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-28 12:34:56"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-28 12:34:56"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/mitra/{mitra_id}": {
+            "get": {
+                "tags": [
+                    "Mitra Admin"
+                ],
+                "summary": "Mendapatkan Data Mitra Berdasarkan ID",
+                "description": "Endpoint untuk mendapatkan data mitra berdasarkan ID yang diberikan",
+                "operationId": "getAllDataMitraByID",
+                "parameters": [
+                    {
+                        "name": "mitra_id",
+                        "in": "path",
+                        "description": "ID Mitra",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data mitra ditemukan"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama_mitra": {
+                                                    "type": "string",
+                                                    "example": "PT. Mitra Sejahtera"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "mitra@example.com"
+                                                },
+                                                "no_hp": {
+                                                    "type": "string",
+                                                    "example": "081234567890"
+                                                },
+                                                "alamat": {
+                                                    "type": "string",
+                                                    "example": "Jl. Kemerdekaan No. 45"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2023-03-01 12:00:00"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2023-03-01 12:00:00"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/ppjk/{barantin_id}": {
+            "get": {
+                "tags": [
+                    "PPJK Admin"
+                ],
+                "summary": "Get PPJK by  Perusahaan induk / Perusahaan Cabang / Perorangan Berdasarkan ID Barantin / ID Barantin Cabang",
+                "description": "Get PPJK by Perusahaan ID",
+                "operationId": "getPpjkByPerusahaanId",
+                "parameters": [
+                    {
+                        "name": "barantin_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/ppjk/{ppjk_id}/detil": {
+            "get": {
+                "tags": [
+                    "PPJK Admin"
+                ],
+                "summary": "Get Detail PPJK",
+                "description": "Get Detail PPJK",
+                "operationId": "getDetailPpjkAdmin",
+                "parameters": [
+                    {
+                        "name": "ppjk_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/ppjk/cek-npwp": {
+            "get": {
+                "tags": [
+                    "PPJK Admin"
+                ],
+                "summary": "Cek NPWP PPJK",
+                "description": "Cek NPWP PPJK",
+                "operationId": "cekNpwpPpjk",
+                "parameters": [
+                    {
+                        "name": "kd_upt",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "npwp_ppjk",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "npwp_pj",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/cabang": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Cabang Perusahaan Induk",
+                "description": "Get Cabang Perusahaan Induk",
+                "operationId": "getCabangPerusahaanInduk",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/cabang/{barantin_id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Detail Cabang Perusahaan Induk",
+                "description": "Get Detail Cabang Perusahaan Induk",
+                "operationId": "getDetailCabangPerusahaanInduk",
+                "parameters": [
+                    {
+                        "name": "barantin_id",
+                        "in": "path",
+                        "description": "ID of the Barantin Cabang",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/mitra": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Ambil Semua User Mitra di masing masing perngguna jasa",
+                "operationId": "c84f56f1eedec5e96f85188a1f2ad418",
+                "responses": {
+                    "200": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "nama_mitra": {
+                                                        "type": "string",
+                                                        "example": "Nama Mitra"
+                                                    },
+                                                    "jenis_identitas_mitra": {
+                                                        "type": "string",
+                                                        "example": "KTP"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/mitra/{mitra_id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Ambil data mitra pengguna jasa berdasarkan id",
+                "operationId": "aa63ef6d1aeff856fa4b5bfe0d43af92",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "mitra_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama_mitra": {
+                                                    "type": "string",
+                                                    "example": "Nama Mitra"
+                                                },
+                                                "jenis_identitas_mitra": {
+                                                    "type": "string",
+                                                    "example": "KTP"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/mitra/store": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Membuat Mitra Baru Perusahaan Induk / Cabang dan Peorangan",
+                "description": "Endpoint untuk membuat mitra baru",
+                "operationId": "createMitra",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nama_mitra": {
+                                        "type": "string",
+                                        "example": "Nama Mitra"
+                                    },
+                                    "jenis_identitas_mitra": {
+                                        "type": "string",
+                                        "example": "KTP"
+                                    },
+                                    "nomor_identitas_mitra": {
+                                        "type": "integer",
+                                        "example": 1234567812345678
+                                    },
+                                    "alamat_mitra": {
+                                        "type": "string",
+                                        "example": "Alamat Mitra"
+                                    },
+                                    "telepon_mitra": {
+                                        "type": "string",
+                                        "example": "1234-5678-9012"
+                                    },
+                                    "negara": {
+                                        "type": "integer",
+                                        "example": 99
+                                    },
+                                    "provinsi": {
+                                        "type": "integer",
+                                        "example": 11
+                                    },
+                                    "kabupaten_kota": {
+                                        "type": "integer",
+                                        "example": 1101
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama_mitra": {
+                                                    "type": "string",
+                                                    "example": "Nama Mitra"
+                                                },
+                                                "jenis_identitas_mitra": {
+                                                    "type": "string",
+                                                    "example": "KTP"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Mitra gagal ditambah"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/ppjk": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get PPJK",
+                "description": "Get PPJK Pengguna Jasa",
+                "operationId": "getPpjk",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/ppjk/{ppjk_id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Detail PPJK Pengguna Jasa",
+                "description": "Get Detail PPJK",
+                "operationId": "getDetailPpjk",
+                "parameters": [
+                    {
+                        "name": "ppjk_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/profile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get User Profile",
+                "description": "Get User Profile",
+                "operationId": "bfb90b10e3a49ea12c6614eb9db0ef95",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Data Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/upt": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Ambil Semua User Upt di masing masing user",
+                "operationId": "51f44aa2d6e7f471d8106ec5361b23cc",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "master_upt_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "Authentication User"
+                ],
+                "summary": "Login user",
+                "description": "Endpoint untuk login user with endpoint '/api/v2'",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "description": "Username for login",
+                                        "type": "string",
+                                        "default": "induk"
+                                    },
+                                    "password": {
+                                        "description": "Password for login",
+                                        "type": "string",
+                                        "format": "password",
+                                        "default": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/user/logout": {
+            "get": {
+                "tags": [
+                    "Authentication User"
+                ],
+                "summary": "Logout user",
+                "description": "Logout the authenticated user",
+                "operationId": "416e5a225979a51150362bca26e4cb9b",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/refresh": {
+            "get": {
+                "tags": [
+                    "Authentication User"
+                ],
+                "summary": "Refresh JWT token",
+                "description": "Refresh the JWT token",
+                "operationId": "ce76567d0626d46967c1c131a30aa288",
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "http",
+                "scheme": "bearer",
+                "description": "Enter token in format (Bearer Token)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
