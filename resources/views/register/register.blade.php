@@ -42,7 +42,7 @@
                 <div class="col-12">
                     <select id="jenis_perusahaan" type="text"
                         class="form-select @error('jenis_perusahaan') is-invalid @enderror" name="jenis_perusahaan">
-                        <option value="">select item</option>
+                        <option value="">Select Item</option>
                         <option value="INDUK">Induk</option>
                         <option value="CABANG">Cabang</option>
                     </select>
@@ -53,30 +53,32 @@
                     </span>
                 @enderror
             </div>
-            <div class="form-group mb-3 row">
-                <label for="upt">UPT Karantina</label>
-                <div class="col-12">
-                    <select id="upt" disabled multiple type="text"
-                        class="form-control @error('upt') is-invalid @enderror upt-select" name="upt[]"></select>
+            <div class="form-group mb-3 row d-none" id="perusahaan-input">
+                <label for="nama">Nama Perusahaan</label>
+                <div class="col-3">
+                    <select id="kategori_perusahaan" class="form-select @error('kategori_perusahaan') is-invalid @enderror"
+                        name="kategori_perusahaan">
+                        <option value="PT" selected>PT</option>
+                        <option value="CV">CV</option>
+                        <option value="UD">UD</option>
+                    </select>
+                    @error('kategori_perusahaan')
+                        <span class="invalid-feedback d-block" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-                @error('upt')
-                    <span class="invalid-feedback d-block" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-            <div class="form-group mb-3 row">
-                <label for="nama">Nama</label>
-                <div class="col-12">
-                    <input id="name" disabled type="text" class="form-control @error('name') is-invalid @enderror"
+                <div class="col-9">
+                    <input id="nama" type="text" class="form-control @error('nama') is-invalid @enderror"
                         name="nama" value="{{ old('nama') }}" required autocomplete="name" autofocus>
+                    @error('nama')
+                        <span class="invalid-feedback d-block" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-                @error('nama')
-                    <span class="invalid-feedback d-block" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
             </div>
+
 
             <div class="form-group mb-3 row">
                 <label for="email">Email</label>
@@ -106,6 +108,16 @@
                     <a href="{{ route('barantin.auth.index') }}" class="text-muted">Back to login</a>
                 </div>
             </div>
+
+            <div class="form-group mt-4">
+                <h5 class="text-center">Panduan Registrasi</h5>
+                <div class="text-center">
+                    <a href="{{ asset('assets/docs/UserManual_RegPTKOnline_PenggunaJasa.pdf') }}" target="_blank"
+                        class="btn btn-link">Pengguna Jasa</a>
+                    <a href="{{ asset('assets/docs/UserManual_RegPTKOnline_AdminPUSAT-UPT.pdf') }}" target="_blank"
+                        class="btn btn-link">Admin Pusat</a>
+                </div>
+            </div>
         </form>
         <!-- end form -->
     </div>
@@ -124,20 +136,21 @@
         });
         $('input[name="pemohon"]').change(function() {
             let val = $(this).val();
-            let label = $('label[for="nama"]')
+            let label = $('label[for="nama"]');
             if (val === 'perorangan') {
                 label.html('Nama Pemohon');
                 $('#perusahaan-select').addClass('d-none');
+                $('#perusahaan-input').addClass('d-none');
                 $('#perusahaan-induk-select').addClass('d-none');
             } else {
                 label.html('Nama Perusahaan');
                 $('#perusahaan-select').removeClass('d-none');
+                $('#perusahaan-input').removeClass('d-none');
             }
             $('.form-control').attr('disabled', false);
         });
         $('#jenis_perusahaan').on('change', function() {
             let val = $(this).val();
-            console.log(val)
             if (val === 'CABANG') {
                 $('#perusahaan-induk-select').removeClass('d-none');
                 return

@@ -37,7 +37,8 @@
                     <div class="row mb-3">
                         <label for="email" class="col-sm-3 col-form-label">Pemohon</label>
                         <div class="col-sm-9">
-                            <input class="form-control" readonly value="{{ $data->barantin->preregister->pemohon }}" type="text" id="" name="">
+                            <input class="form-control" readonly value="{{ $data->barantin->preregister->pemohon }}"
+                                type="text" id="" name="">
                             <div class="invalid-feedback" id="feedback"></div>
                         </div>
                     </div>
@@ -45,7 +46,8 @@
                     <div class="row mb-3">
                         <label for="email" class="col-sm-3 col-form-label">Nama</label>
                         <div class="col-sm-9">
-                            <input class="form-control" value="{{ $data->barantin->perusahaan }}" type="text" id="nama_perusahaan" name="nama_perusahaan">
+                            <input class="form-control" value="{{ $data->barantin->perusahaan }}" type="text"
+                                id="nama_perusahaan" name="nama_perusahaan">
                             <div class="invalid-feedback" id="nama_perusahaan-feedback"></div>
                         </div>
                     </div>
@@ -53,23 +55,27 @@
                         <label for="jenis_identitas" class="col-md-3 col-sm-3 col-xs-12 col-form-label">Jenis
                             Identitas</label>
                         <div class="col">
-                            <select class="form-control select-item" type="text" placeholder="Jenis Identitas" id="jenis_identitas" name="jenis_identitas">
+                            <select class="form-control select-item" type="text" placeholder="Jenis Identitas"
+                                id="jenis_identitas" name="jenis_identitas">
                                 <option value="">select item</option>
                                 <option value="PASSPORT">PASSPORT</option>
                                 <option value="KTP">KTP</option>
-                                <option value="NPWP">NPWP 16 DIGIT</option>
+                                <option value="NPWP" selected>NPWP 16 DIGIT</option>
                             </select>
                             <div class="invalid-feedback" id="jenis_identitas-feedback"></div>
                         </div>
                         <div class="col">
-                            <input class="form-control" type="number" placeholder="Nomor Identitas" id="nomor_identitas" name="nomor_identitas" value="{{ $data->barantin->nomor_identitas ?? '' }}" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
+                            <input class="form-control" type="number" placeholder="Nomor Identitas"
+                                id="nomor_identitas" name="nomor_identitas"
+                                value="{{ $data->barantin->nomor_identitas ?? '' }}" maxlength="16" pattern="\d*" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                             <div class="invalid-feedback" id="nomor_identitas-feedback"></div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="jenis_perusahaan" class="col-sm-3 col-form-label">Jenis Perusahaan</label>
                         <div class="col-sm-9">
-                            <select class="form-control select-item" id="jenis_perusahaan" rows="3" placeholder="Lingkup Akivitas" name="jenis_perusahaan">
+                            <select class="form-control select-item" id="jenis_perusahaan" rows="3"
+                                placeholder="Lingkup Akivitas" name="jenis_perusahaan">
                                 <option value="PEMILIK BARANG">PEMILIK BARANG</option>
                                 <option value="PPJK">PPJK</option>
                                 <option value="EMKL">EMKL</option>
@@ -82,7 +88,8 @@
                     <div class="row mb-3">
                         <label for="lingkup_akivitas" class="col-sm-3 col-form-label">Lingkup Akivitas</label>
                         <div class="col-sm-9">
-                            <select class="form-control select-item" id="lingkup_aktivitas" rows="3" placeholder="Lingkup Akivitas" name="lingkup_aktivitas[]" multiple>
+                            <select class="form-control select-item" id="lingkup_aktivitas" rows="3"
+                                placeholder="Lingkup Akivitas" name="lingkup_aktivitas[]" multiple>
                                 <option value="1">Import</option>
                                 <option value="2">Domestik Masuk</option>
                                 <option value="3">Export</option>
@@ -95,7 +102,9 @@
                     <div class="row mb-3">
                         <label for="upt" class="col-sm-3 col-form-label">Telepon</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="telepon" name="telepon" aria-describedby="inputGroupPrepend" required value="{{ $data->barantin->telepon ?? '' }}">
+                            <input type="text" class="form-control" id="telepon" name="telepon"
+                                aria-describedby="inputGroupPrepend" required
+                                value="{{ $data->barantin->telepon ?? '' }}">
                             <div class="invalid-feedback" id="telepon-feedback"></div>
                         </div>
                     </div>
@@ -104,14 +113,16 @@
                     <div class="row mb-3">
                         <label for="fax" class="col-sm-3 col-form-label">Fax</label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="text" placeholder="Fax" id="fax" name="fax" value="{{ $data->barantin->fax ?? '' }}">
+                            <input class="form-control" type="text" placeholder="Fax" id="fax"
+                                name="fax" value="{{ $data->barantin->fax ?? '' }}">
                             <div class="invalid-feedback" id="fax-feedback"></div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="email" class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-9">
-                            <input class="form-control" readonly value="{{ $data->barantin->preregister->email }}" type="email" placeholder="Email" id="email" name="email">
+                            <input class="form-control" readonly value="{{ $data->barantin->preregister->email }}"
+                                type="email" placeholder="Email" id="email" name="email">
                             <div class="invalid-feedback" id="email-feedback"></div>
                         </div>
                     </div>
@@ -135,7 +146,8 @@
                     <div class="row mb-3" id="provinsi-form">
                         <label for="provinsi" class="col-sm-3 col-form-label">Provinsi</label>
                         <div class="col-sm-9">
-                            <select class="form-control provinsi-select" type="text" placeholder="Provinsi" id="provinsi" name="provinsi"></select>
+                            <select class="form-control provinsi-select" type="text" placeholder="Provinsi"
+                                id="provinsi" name="provinsi"></select>
                             <div class="invalid-feedback" id="provinsi-feedback"></div>
                         </div>
                     </div>
@@ -143,7 +155,8 @@
                     <div class="row mb-3" id="kota-form">
                         <label for="kota" class="col-sm-3 col-form-label">Kota/Kab</label>
                         <div class="col-sm-9">
-                            <select class="form-control kota-select" type="text" placeholder="Kota" id="kota" name="kota"></select>
+                            <select class="form-control kota-select" type="text" placeholder="Kota"
+                                id="kota" name="kota"></select>
                             <div class="invalid-feedback" id="kota-feedback"></div>
                         </div>
                     </div>
@@ -167,7 +180,8 @@
                     <div class="row mb-3">
                         <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" placeholder="Nama" id="nama_cp" name="nama_cp" value="{{ $data->barantin->nama_cp ?? '' }}">
+                            <input class="form-control" type="text" placeholder="Nama" id="nama_cp"
+                                name="nama_cp" value="{{ $data->barantin->nama_cp ?? '' }}">
                             <div class="invalid-feedback" id="nama_cp-feedback"></div>
                         </div>
                     </div>
@@ -175,7 +189,8 @@
                     <div class="row mb-3">
                         <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" placeholder="Alamat" id="alamat_cp" name="alamat_cp" value="{{ $data->barantin->alamat_cp ?? '' }}">
+                            <input class="form-control" type="text" placeholder="Alamat" id="alamat_cp"
+                                name="alamat_cp" value="{{ $data->barantin->alamat_cp ?? '' }}">
                             <div class="invalid-feedback" id="alamat_cp-feedback"></div>
                         </div>
                     </div>
@@ -183,7 +198,8 @@
                     <div class="row mb-3">
                         <label for="telepon" class="col-sm-2 col-form-label">Telepon</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="tel" placeholder="Telepon" id="telepon_cp" name="telepon_cp" value="{{ $data->barantin->telepon_cp ?? '' }}">
+                            <input class="form-control" type="tel" placeholder="Telepon" id="telepon_cp"
+                                name="telepon_cp" value="{{ $data->barantin->telepon_cp ?? '' }}">
                             <div class="invalid-feedback" id="telepon_cp-feedback"></div>
                         </div>
                     </div>
@@ -199,7 +215,8 @@
                     <div class="row mb-3">
                         <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" placeholder="Nama" id="nama_tdd" name="nama_tdd" value="{{ $data->barantin->nama_tdd ?? '' }}">
+                            <input class="form-control" type="text" placeholder="Nama" id="nama_tdd"
+                                name="nama_tdd" value="{{ $data->barantin->nama_tdd ?? '' }}">
                             <div class="invalid-feedback" id="nama_tdd-feedback"></div>
                         </div>
                     </div>
@@ -207,17 +224,19 @@
                     <div class="row mb-3">
                         <label for="jenis_identitas" class="col-sm-2 col-form-label">Jenis Identitas</label>
                         <div class="col">
-                            <select class="form-control select-item" type="text" placeholder="Jenis Identitas" id="jenis_identitas_tdd" name="jenis_identitas_tdd">
+                            <select class="form-control select-item" type="text" placeholder="Jenis Identitas"
+                                id="jenis_identitas_tdd" name="jenis_identitas_tdd">
                                 <option value="">select item</option>
                                 <option value="PASSPORT">PASSPORT</option>
                                 <option value="KTP">KTP</option>
-                                <option value="NPWP">NPWP 16 DIGIT</option>
+                                <option value="NPWP" selected>NPWP 16 DIGIT</option>
                             </select>
                             <div class="invalid-feedback" id="jenis_identitas_tdd-feedback"></div>
                         </div>
                         <div class="col">
-                            <input class="form-control" type="number" placeholder="Nomer Identitas" id="nomor_identitas_tdd" name="nomor_identitas_tdd"
-                                value="{{ $data->barantin->nomor_identitas_tdd ?? '' }}" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
+                            <input class="form-control" type="number" placeholder="Nomer Identitas"
+                                id="nomor_identitas_tdd" name="nomor_identitas_tdd"
+                                value="{{ $data->barantin->nomor_identitas_tdd ?? '' }}" maxlength="16" pattern="\d*" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                             <div class="invalid-feedback" id="nomor_identitas_tdd-feedback"></div>
                         </div>
                     </div>
@@ -225,7 +244,8 @@
                     <div class="row mb-3">
                         <label for="jabatan" class="col-sm-2 col-form-label">Jabatan</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" placeholder="Jabatan" id="jabatan_tdd" name="jabatan_tdd" value="{{ $data->barantin->jabatan_tdd ?? '' }}">
+                            <input class="form-control" type="text" placeholder="Jabatan" id="jabatan_tdd"
+                                name="jabatan_tdd" value="{{ $data->barantin->jabatan_tdd ?? '' }}">
                             <div class="invalid-feedback" id="jabatan_tdd-feedback"></div>
                         </div>
                     </div>
@@ -233,7 +253,8 @@
                     <div class="row mb-3">
                         <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" placeholder="Alamat" id="alamat_tdd" name="alamat_tdd" value="{{ $data->barantin->alamat_tdd ?? '' }}">
+                            <input class="form-control" type="text" placeholder="Alamat" id="alamat_tdd"
+                                name="alamat_tdd" value="{{ $data->barantin->alamat_tdd ?? '' }}">
                             <div class="invalid-feedback" id="alamat_tdd-feedback"></div>
                         </div>
                     </div>
@@ -249,23 +270,26 @@
                 <form class="row" id="form-pendukung" novalidate>
                     <div class="col-md-4 mb-3">
                         <label for="jenis_dokumen" class="form-label">Jenis Dokumen</label>
-                        <select type="text" class="form-select form-control-dokumen" id="jenis_dokumen" name="jenis_dokumen">
+                        <select type="text" class="form-select form-control-dokumen" id="jenis_dokumen"
+                            name="jenis_dokumen">
                             <option value="">select item</option>
                             <option value="KTP">KTP</option>
                             <option value="PASSPORT">PASSPORT</option>
-                            <option value="NPWP">NPWP 16 DIGIT</option>
+                            <option value="NPWP" selected>NPWP 16 DIGIT</option>
                         </select>
                         <div class="invalid-feedback" id="jenis_dokumen-feedback"></div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="nomer_dokumen" class="form-label">Nomer Dokumen</label>
-                        <input type="number" class="form-control form-control-dokumen" id="nomer_dokumen" name="nomer_dokumen" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
+                        <input type="number" class="form-control form-control-dokumen" id="nomer_dokumen"
+                            name="nomer_dokumen" maxlength="16" pattern="\d*" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                         <div class="invalid-feedback" id="nomer_dokumen-feedback"></div>
 
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="tanggal_terbit" class="form-label">Tanggal terbit</label>
-                        <input type="date" class="form-control form-control-dokumen" id="tanggal_terbit" name="tanggal_terbit">
+                        <input type="date" class="form-control form-control-dokumen" id="tanggal_terbit"
+                            name="tanggal_terbit">
                         <div class="invalid-feedback" id="tanggal_terbit-feedback"></div>
                     </div>
                     <div class="mb-3">
@@ -279,7 +303,8 @@
                 </div>
                 <div class="row mb-5">
                     <div class="table-responsive">
-                        <table id="datatable-dokumen-pendukung" data-id="{{ $data->barantin->id }}" class="table table-bordered dt-responsive nowrap"
+                        <table id="datatable-dokumen-pendukung" data-id="{{ $data->barantin->id }}"
+                            class="table table-bordered dt-responsive nowrap"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
@@ -301,7 +326,8 @@
     <ul class="pager wizard twitter-bs-wizard-pager-link">
         <li class="previous"><a href="javascript: void(0);">Previous</a></li>
         <li class="next"><a href="javascript: void(0);">Next</a></li>
-        <li class="submit-form d-none"><button class="btn btn-success" id="button-submit" href="javascript: void(0);">Submit</button>
+        <li class="submit-form d-none"><button class="btn btn-success" id="button-submit"
+                href="javascript: void(0);">Submit</button>
         </li>
     </ul>
 </div>

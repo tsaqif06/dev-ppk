@@ -50,9 +50,29 @@ class PreRegisterController extends Controller
      */
     public function NewRegister(PreRegisterRequestStore $request): View
     {
-        $preregister = PreRegister::updateOrCreate(['email' => $request->email], $request->merge(['verify_email' => null])->all());
+
+        // Ambil nilai dari form
+        $kategoriPerusahaan = $request->input('kategori_perusahaan');
+        $nama = $request->input('nama');
+
+        // Gabungkan kategori dan nama
+        $namaPerusahaan = $kategoriPerusahaan . '. ' . $nama;
+
+        // Buat array data yang akan disimpan
+        $data = $request->except('kategori_perusahaan'); // Hapus kategori_perusahaan dari data
+        $data['nama'] = $namaPerusahaan; // Gabungkan dan simpan nama perusahaan
+        $data['verify_email'] = null; // Atur verify_email ke null jika diperlukan
+
+        // Simpan atau perbarui data
+        $preregister = PreRegister::updateOrCreate(
+            ['email' => $request->email],
+            $data
+        );
+
+        // Lanjutkan proses pendaftaran
         return $this->saveRegister($preregister, $request);
     }
+
 
 
     /**
@@ -66,9 +86,7 @@ class PreRegisterController extends Controller
      */
     public function saveRegister(PreRegister $preregister, Request $request): View
     {
-        foreach ($request->upt as $key => $upt) {
-            Register::updateOrCreate(['master_upt_id' => $upt, 'pre_register_id' => $preregister->id], ['status' => null, 'pj_barantin_id' => null, 'pre_register_id' => $preregister->id]);
-        }
+        Register::updateOrCreate(['pre_register_id' => $preregister->id], ['status' => null, 'pj_barantin_id' => null]);
         /* clear all token */
         MailToken::where('pre_register_id', $preregister->id)->delete();
         /* generaet new token */
@@ -76,7 +94,6 @@ class PreRegisterController extends Controller
         /*send email token*/
         Mail::to($preregister->email)->send(new MailSendTokenPreRegister($preregister->id, $generate->token));
         return view('register.verify', compact('generate'));
-
     }
 
     /**
@@ -163,7 +180,4 @@ class PreRegisterController extends Controller
         });
         return view('register.verify', compact('generate'))->with(['message_generate' => 'Token berhasil digenerate ulang']);
     }
-
-
-
 }
