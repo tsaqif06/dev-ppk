@@ -42,14 +42,14 @@
                                         <input class="form-control" disabled value="{{ auth()->user()->barantin->jenis_perusahaan }}" type="text" id="pemohon" name="pemohon">
                                     </div>
                                 </div>
-                                @if (auth()->user()->role === 'cabang' || auth()->user()->role === 'induk')
+                                {{-- @if (auth()->user()->role === 'cabang' || auth()->user()->role === 'induk')
                                     <div class="row mb-3">
                                         <label for="fax" class="col-sm-3 col-form-label">Nama Alias</label>
                                         <div class="col-sm-9">
                                             <input class="form-control" type="text" disabled value="{{ auth()->user()->barantin->nama_alias_perusahaan }}" id="nomor_fax" name="nomor_fax">
                                         </div>
                                     </div>
-                                @endif
+                                @endif --}}
                                 <div class="row mb-3">
                                     <label for="jenis_identitas" class="col-md-3 col-sm-3 col-xs-12 col-form-label">Jenis
                                         Identitas</label>

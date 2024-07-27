@@ -64,7 +64,7 @@
                        <div class="tab-content twitter-bs-wizard-tab-content">
                            <div class="tab-pane" id="seller-details">
                                <hr style="border-top: 3px solid rgb(119, 59, 3);" class="mb-1" />
-                               <label for="" class="form-label fw-bold h6 mt-0 mb-0">Registrasi Pemohon</label>
+                               <label for="" class="form-label fw-bold h6 mt-0 mb-0">Register Pemohon</label>
                                <hr class="mt-0 mb-3">
 
                                <form class="row" id="form-register">
@@ -112,7 +112,7 @@
                                            </div>
                                            <div class="col">
                                                <input class="form-control" type="number" placeholder="Nomor Identitas" id="nomor_identitas" name="nomor_identitas" readonly
-                                                   value="{{ auth()->user()->barantin->nomor_identitas }}">
+                                                   value="{{ auth()->user()->barantin->nomor_identitas }}" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
                                                <div class="invalid-feedback" id="nomor_identitas-feedback"></div>
                                            </div>
                                        </div>
@@ -133,7 +133,7 @@
                                        </div>
 
                                        <div class="row mb-3">
-                                           <label for="email" class="col-sm-3 col-form-label">UPT</label>
+                                           <label for="email" class="col-sm-3 col-form-label">Permohonan Registrasi ke UPT</label>
                                            <div class="col-sm-9">
                                                <select class="form-control upt-select" id="upt" multiple name="upt[]"></select>
                                                <div class="invalid-feedback" id="upt-feedback"></div>
@@ -295,7 +295,7 @@
                                            </div>
                                            <div class="col">
                                                <input class="form-control" type="number" placeholder="Nomer Identitas" id="nomor_identitas_tdd" name="nomor_identitas_tdd"
-                                                   value="{{ $baratan->nomor_identitas_tdd ?? '' }}">
+                                                   value="{{ $baratan->nomor_identitas_tdd ?? '' }}" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
                                                <div class="invalid-feedback" id="nomor_identitas_tdd-feedback"></div>
                                            </div>
                                        </div>
@@ -342,7 +342,7 @@
                                        </div>
                                        <div class="col-md-4 mb-3">
                                            <label for="nomer_dokumen" class="form-label">Nomer Dokumen</label>
-                                           <input type="number" class="form-control form-control-dokumen" id="nomer_dokumen" name="nomer_dokumen">
+                                           <input type="number" class="form-control form-control-dokumen" id="nomer_dokumen" name="nomer_dokumen" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
                                            <div class="invalid-feedback" id="nomer_dokumen-feedback"></div>
 
                                        </div>
