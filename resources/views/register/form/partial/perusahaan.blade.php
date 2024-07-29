@@ -259,7 +259,8 @@
                         <div class="col">
                             <input class="form-control" type="number" placeholder="Nomer Identitas"
                                 id="nomor_identitas_tdd" name="nomor_identitas_tdd"
-                                value="{{ $baratan->nomor_identitas_tdd ?? '' }}" maxlength="16" pattern="\d*">
+                                value="{{ $baratan->nomor_identitas_tdd ?? '' }}" maxlength="16" pattern="\d*"
+                                oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                             <div class="invalid-feedback" id="nomor_identitas_tdd-feedback"></div>
                         </div>
                     </div>
