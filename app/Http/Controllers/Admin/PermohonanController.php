@@ -97,13 +97,15 @@ class PermohonanController extends Controller
     {
         $model = $this->queryRegister();
         $uptId = auth()->guard('admin')->user()->upt_id;
+        // var_dump($model);
+        // var_dump($uptId);
+        // var_dump($this->uptPusatId);die;
         if ($uptId != $this->uptPusatId) {
             $model = $model->where('master_upt_id', $uptId);
         }
         $datatable = DataTables::eloquent($model)->addIndexColumn();
 
         return $this->columnDaerahRender($datatable);
-
     }
 
     /**
@@ -129,7 +131,7 @@ class PermohonanController extends Controller
             ->filterColumn('negara', function ($query, $keyword) {
                 $negara = collect(BarantinApiHelper::getDataMasterNegara()->original);
                 $idNegara = JsonFilterHelper::searchDataByKeyword($negara, $keyword, 'nama')->pluck('id');
-                $query->whereHas('barantin', fn($query) => $query->whereIn('negara_id', $idNegara));
+                $query->whereHas('barantin', fn ($query) => $query->whereIn('negara_id', $idNegara));
             })
             ->addColumn('provinsi', function ($row) {
                 $provinsi = BarantinApiHelper::getMasterProvinsiByID($row->barantin->provinsi_id);
@@ -138,7 +140,7 @@ class PermohonanController extends Controller
             ->filterColumn('provinsi', function ($query, $keyword) {
                 $provinsi = collect(BarantinApiHelper::getDataMasterProvinsi()->original);
                 $idProvinsi = JsonFilterHelper::searchDataByKeyword($provinsi, $keyword, 'nama')->pluck('id');
-                $query->whereHas('barantin', fn($query) => $query->whereIn('provinsi_id', $idProvinsi));
+                $query->whereHas('barantin', fn ($query) => $query->whereIn('provinsi_id', $idProvinsi));
             })
             ->addColumn('kota', function ($row) {
                 $kota = BarantinApiHelper::getMasterKotaByIDProvinsiID($row->barantin->kota, $row->barantin->provinsi_id);
@@ -147,7 +149,7 @@ class PermohonanController extends Controller
             ->filterColumn('kota', function ($query, $keyword) {
                 $kota = collect(BarantinApiHelper::getDataMasterKota()->original);
                 $idKota = JsonFilterHelper::searchDataByKeyword($kota, $keyword, 'nama')->pluck('id');
-                $query->whereHas('barantin', fn($query) => $query->whereIn('kota', $idKota));
+                $query->whereHas('barantin', fn ($query) => $query->whereIn('kota', $idKota));
             })->filterColumn('updated_at', function ($query, $keyword) {
                 $range = explode(' - ', $keyword);
                 if (count($range) === 2) {

@@ -20,23 +20,19 @@ class EmailTerdaftarCheckRule implements ValidationRule
 
     private function checkRegisters($preregister, Closure $fail)
     {
-        foreach ($preregister->register as $register) {
-            $this->checkUptStatus($register, $fail);
-        }
+        $this->checkUptStatus($preregister, $preregister->register, $fail);
     }
 
-    private function checkUptStatus($register, Closure $fail)
+    private function checkUptStatus($register, $masterupt, Closure $fail)
     {
-        foreach (request()->input('upt') as $upt) {
-            if (in_array($upt, $register->pluck('master_upt_id')->all())) {
-                $this->validateRegisterStatus($register->id, $upt, $fail);
-            }
-        }
+        $upt = $masterupt->pluck('master_upt_id')->all();
+        $this->validateRegisterStatus($register->id, $upt[0], $fail);
     }
 
     private function validateRegisterStatus($registerId, $upt, Closure $fail)
     {
-        $register = Register::where('id', $registerId)->where('master_upt_id', $upt)->first();
+        $register = Register::where('pre_register_id', $registerId)->where('master_upt_id', $upt)->first();
+
         if (isset($register->status)) {
             if ($register->status === 'MENUNGGU') {
                 $fail('email sudah terdaftar di upt yang dipilih status menunggu');

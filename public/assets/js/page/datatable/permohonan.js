@@ -167,18 +167,18 @@ $("#filter-status-import").change(function () {
         return table.column("barantin.status_import:name").search("").draw();
     return table.column("barantin.status_import:name").search(val).draw();
 });
-$("#tanggal-register").daterangepicker();
-$("#tanggal-register").on("apply.daterangepicker", function (ev, picker) {
-    var startDate = picker.startDate.format("YYYY-MM-DD");
-    var endDate = picker.endDate.format("YYYY-MM-DD");
-    table
-        .column("updated_at:name")
-        .search(startDate + " - " + endDate)
-        .draw();
-});
-$("#tanggal-register").on("cancel.daterangepicker", function (ev, picker) {
-    table.column("updated_at:name").search("").draw();
-});
+// $("#tanggal-register").daterangepicker();
+// $("#tanggal-register").on("apply.daterangepicker", function (ev, picker) {
+//     var startDate = picker.startDate.format("YYYY-MM-DD");
+//     var endDate = picker.endDate.format("YYYY-MM-DD");
+//     table
+//         .column("updated_at:name")
+//         .search(startDate + " - " + endDate)
+//         .draw();
+// });
+// $("#tanggal-register").on("cancel.daterangepicker", function (ev, picker) {
+//     table.column("updated_at:name").search("").draw();
+// });
 $("#filter-upt").change(function () {
     var val = $(this).val();
     if (val === "all")

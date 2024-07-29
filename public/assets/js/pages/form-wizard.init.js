@@ -3,7 +3,7 @@ $(document).ready(function () {
         tabClass: "nav nav-pills nav-justified",
         onLast: false,
         onNext: function (tab, navigation, index) {
-            if (index >= 4) {
+            if (index >= 2) {
                 submitActive()
                 return
             }

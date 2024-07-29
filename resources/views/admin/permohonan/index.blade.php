@@ -45,12 +45,12 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    {{--  <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label">Tanggal Register</label>
                                             <input type="text" class="form-control" id="tanggal-register">
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                     @if (auth()->guard('admin')->user()->upt_id == $uptPusatId)
                                         <div class="col">
                                             <div class="mb-3">
