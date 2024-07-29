@@ -27,7 +27,8 @@
                      <div class="col">
                          <input class="form-control" type="number" placeholder="Nomor Identitas"
                              id="nomor_identitas_mitra" name="nomor_identitas_mitra"
-                             value="{{ $data->nomor_identitas_mitra }}" maxlength="16" pattern="\d*" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                             value="{{ $data->nomor_identitas_mitra }}" maxlength="16" pattern="\d*"
+                             oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                          <div class="invalid-feedback" id="nomor_identitas_mitra-feedback"></div>
                      </div>
                  </div>

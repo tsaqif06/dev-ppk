@@ -80,7 +80,7 @@
                             <input class="form-control" type="number" placeholder="Nomor Identitas"
                                 id="nomor_identitas" name="nomor_identitas"
                                 value="{{ $data->barantin->nomor_identitas ?? '' }}" maxlength="16" pattern="\d*"
-                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                             <div class="invalid-feedback" id="nomor_identitas-feedback"></div>
                         </div>
                     </div>
@@ -270,7 +270,7 @@
                                 id="nomor_identitas_tdd" name="nomor_identitas_tdd"
                                 value="{{ $data->barantin->nomor_identitas_tdd ?? '' }}" maxlength="16"
                                 pattern="\d*"
-                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                             <div class="invalid-feedback" id="nomor_identitas_tdd-feedback"></div>
                         </div>
                     </div>
@@ -320,7 +320,8 @@
                     <div class="col-md-4 mb-3">
                         <label for="nomer_dokumen" class="form-label">Nomer Dokumen</label>
                         <input type="number" class="form-control form-control-dokumen" id="nomer_dokumen"
-                            name="nomer_dokumen" maxlength="16" pattern="\d*" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            name="nomer_dokumen" maxlength="16" pattern="\d*"
+                            oninput="javascript: if (this.value.length >= this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                         <div class="invalid-feedback" id="nomer_dokumen-feedback"></div>
 
                     </div>
