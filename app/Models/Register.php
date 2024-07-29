@@ -12,7 +12,7 @@ class Register extends Model
 {
     use HasFactory, HasUuids;
     protected $guarded = ['id', 'created_at', 'updated_at'];
-    protected $fillable = ['pj_barantin_id', 'master_upt_id', 'status', 'pre_register_id', 'keterangan', 'blockir'];
+    protected $fillable = ['pj_barantin_id', 'master_upt_id', 'status', 'email', 'pre_register_id', 'keterangan', 'blockir'];
 
     public function barantin(): BelongsTo
     {
