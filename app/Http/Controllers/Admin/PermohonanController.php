@@ -23,6 +23,7 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use App\Mail\MailSendUsernamePassword;
 use App\Mail\MailSendRejection;
+use App\Helpers\Helper;
 
 class PermohonanController extends Controller
 {
@@ -194,64 +195,98 @@ class PermohonanController extends Controller
      * @param Request $request Data request yang mengandung status dan keterangan.
      * @return JsonResponse
      */
+    public function generateRandomPassword($length = 8): string
+    {
+        return Str::random($length);
+    }
+
+    // Metode untuk membuat string acak
+    public function generateRandomString($length = 8, $pemohon, $jenis_perusahaan): string
+    {
+        return Str::random($length); // Anda bisa mengubah ini sesuai dengan kebutuhan logika Anda
+    }
+
+    public function SendUsernamePasswordEmail(string $idOrEmail): bool|JsonResponse
+    {
+        $user = User::where('email', $idOrEmail)->orWhere('id', $idOrEmail)->first();
+        $password = $this->generateRandomPassword(8);
+        $user->update(['password' => $password]);
+        Mail::to($user->email)->send(new MailSendUsernamePassword($user->username, $password));
+
+        if (request()->input('reset')) {
+            return response()->json(['table' => 'pendaftar-datatable', 'nama' => $user->nama]);
+        }
+        return true;
+    }
+
     public function confirmRegister(string $id, Request $request): JsonResponse
     {
+        // Validasi input request
         $request->validate([
             'status' => 'required|in:DISETUJUI,DITOLAK',
             'keterangan' => 'nullable'
         ]);
-    
-        $register = Register::with('preRegister')->find($id);
-    
+
+        // Temukan entitas Register dengan relasi preRegister dan barantin
+        $register = Register::with('preRegister', 'barantin')->find($id);
+
         if ($register) {
-            $res = $register->update($request->only(['status', 'keterangan']));
-            
-            if ($res) {
-                $preRegister = $register->preRegister;
-                $email = $preRegister ? $preRegister->email : null;
-                $name = $preRegister ? $preRegister->nama : null; 
-    
-                if ($request->status === 'DISETUJUI') {
-                    $username = Str::upper(Str::random(6)); 
-                    $password = Str::random(8); 
-    
-                    if ($email && $name) { 
-                        $user = User::create([
-                            'id' => (string) Str::uuid(), 
-                            'nama' => $name, 
-                            'email' => $email, 
-                            'username' => $username,
-                            'role' => 'perorangan',
-                            'status_user' => '1',
-                            'password' => Hash::make($password),
-                            'email_verified_at' => now(),
-                            'remember_token' => Str::random(10),
-                        ]);
-    
-                        Mail::to($email)->send(new MailSendUsernamePassword($username, $password));
-                    } else {
-                        return AjaxResponse::ErrorResponse('Email address or name is missing', 400);
-                    }
+            // Update status dan keterangan
+            $register->update($request->only(['status', 'keterangan']));
+
+            $preRegister = $register->preRegister;
+            $barantin = $register->barantin;
+
+            if ($request->status === 'DISETUJUI') {
+                $username = Str::upper(Str::random(6));
+                $password = Str::random(8);
+                // Tentukan role berdasarkan pemohon dan jenis perusahaan
+                $role = 'perorangan'; // nilai default
+                if ($preRegister->pemohon === 'perusahaan') {
+                    $role = ($preRegister->jenis_perusahaan === 'induk') ? 'induk' : 'cabang';
                 }
-    
-                // If rejected, send a rejection email
-                if ($request->status === 'DITOLAK') {
-                    $reason = $request->keterangan ?: 'No reason provided'; // Use provided reason or default message
-    
-                    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        Mail::to($email)->send(new MailSendRejection($reason));
-                    } else {
-                        \Log::error('Invalid email address:', ['email' => $email]);
-                    }
-                }
-    
-                return AjaxResponse::SuccessResponse('data register ' . $request->status, 'permohonan-datatable');
+
+                // Buat data pengguna
+                $userCollect = collect([
+                    'nama' => $barantin->nama_perusahaan,
+                    'email' => $barantin->email,
+                    'username' => $username,
+                    'role' => $role,
+                    'status_user' => 1,
+                    'password' => Hash::make($password),
+                ]);
+
+                // Buat pengguna baru
+                $user = User::create($userCollect->all());
+                $barantin->update(['user_id' => $user->id]);
+
+                // Kirim email dengan detail login
+                $this->SendUsernamePasswordEmail($user->id);
+
+                // Mengembalikan respons sukses
+                return AjaxResponse::SuccessResponse('User created successfully', 'permohonan-datatable');
             }
-            return AjaxResponse::ErrorResponse('register gagal diapprove', 400);
+
+            // Jika ditolak, kirim email penolakan
+            if ($request->status === 'DITOLAK') {
+                $reason = $request->keterangan ?: 'No reason provided'; // Gunakan alasan yang diberikan atau pesan default
+
+                if (filter_var($preRegister->email, FILTER_VALIDATE_EMAIL)) {
+                    Mail::to($preRegister->email)->send(new MailSendRejection($reason));
+                } else {
+                    \Log::error('Invalid email address:', ['email' => $preRegister->email]);
+                }
+
+                // Mengembalikan respons sukses setelah penolakan
+                return AjaxResponse::SuccessResponse('Data register ' . $request->status, 'permohonan-datatable');
+            }
         }
-        return AjaxResponse::ErrorResponse('data register tidak ditemukan', 400);
+
+        // Jika entitas Register tidak ditemukan
+        return AjaxResponse::ErrorResponse('Data register tidak ditemukan', 400);
     }
-    
+
+
     /**
      * Menghasilkan JSON response untuk DataTables yang menampilkan dokumen pendukung.
      *

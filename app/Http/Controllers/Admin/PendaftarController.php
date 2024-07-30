@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Register;
 use App\Models\PjBarantin;
+use App\Mail\MailBlockUser;
 use App\Models\PreRegister;
 use Illuminate\Http\Request;
 use App\Helpers\AjaxResponse;
@@ -106,7 +107,7 @@ class PendaftarController extends Controller
             ->filterColumn('negara', function ($query, $keyword) {
                 $negara = collect(BarantinApiHelper::getDataMasterNegara()->original);
                 $idNegara = JsonFilterHelper::searchDataByKeyword($negara, $keyword, 'nama')->pluck('id');
-                $query->whereHas('barantin', fn($query) => $query->whereIn('negara_id', $idNegara));
+                $query->whereHas('barantin', fn ($query) => $query->whereIn('negara_id', $idNegara));
             })
             ->addColumn('provinsi', function ($row) {
                 $provinsi = BarantinApiHelper::getMasterProvinsiByID($row->barantin->provinsi_id);
@@ -115,7 +116,7 @@ class PendaftarController extends Controller
             ->filterColumn('provinsi', function ($query, $keyword) {
                 $provinsi = collect(BarantinApiHelper::getDataMasterProvinsi()->original);
                 $idProvinsi = JsonFilterHelper::searchDataByKeyword($provinsi, $keyword, 'nama')->pluck('id');
-                $query->whereHas('barantin', fn($query) => $query->whereIn('provinsi_id', $idProvinsi));
+                $query->whereHas('barantin', fn ($query) => $query->whereIn('provinsi_id', $idProvinsi));
             })
             ->addColumn('kota', function ($row) {
                 $kota = BarantinApiHelper::getMasterKotaByIDProvinsiID($row->barantin->kota, $row->barantin->provinsi_id);
@@ -124,7 +125,7 @@ class PendaftarController extends Controller
             ->filterColumn('kota', function ($query, $keyword) {
                 $kota = collect(BarantinApiHelper::getDataMasterKota()->original);
                 $idKota = JsonFilterHelper::searchDataByKeyword($kota, $keyword, 'nama')->pluck('id');
-                $query->whereHas('barantin', fn($query) => $query->whereIn('kota', $idKota));
+                $query->whereHas('barantin', fn ($query) => $query->whereIn('kota', $idKota));
             })->filterColumn('updated_at', function ($query, $keyword) {
                 $range = explode(' - ', $keyword);
                 if (count($range) === 2) {
@@ -147,25 +148,39 @@ class PendaftarController extends Controller
     }
 
     // open blokir
-    public function BlockAccessPendaftar(string $id): JsonResponse
+    public function BlockAccessPendaftar(Request $request, string $id): JsonResponse
     {
         $res = null;
+        $keterangan = $request->input('keterangan', ''); // Ambil data keterangan dari request
 
-        DB::transaction(function () use ($id, &$res) {
-            $register = Register::find($id);
-            $res = $register->update(['blockir' => 1]);
+        DB::transaction(function () use ($id, $keterangan, &$res) {
+            $register = Register::with('preRegister')->find($id);
+            $preRegister = $register->preRegister;
+
+            $res = $register->update([
+                'blockir' => 1,
+                'keterangan' => $keterangan, // Simpan keterangan ke kolom block_reason
+            ]);
             $cek = Register::where('blockir', 0)->where(function ($query) use ($register) {
                 $query->where('pj_barantin_id', $register->pj_barantin_id)->orWhere('barantin_cabang_id', $register->barantin_cabang_id);
             })->exists();
+            $reason = $register->keterangan ?: 'No reason provided';
+            if (filter_var($preRegister->email, FILTER_VALIDATE_EMAIL)) {
+                Mail::to($preRegister->email)->send(new MailBlockUser($reason));
+            } else {
+                \Log::error('Invalid email address:', ['email' => $preRegister->email]);
+            }
             if ($cek) {
                 $res = $register->barantin ? $register->barantin->user()->update(['status_user' => 0]) : $register->barantincabang->user()->update(['status_user' => 0]);
             }
         });
+
         if ($res) {
-            return AjaxResponse::SuccessResponse('blokir berhasil di aktifkan', 'pendaftar-datatable');
+            return AjaxResponse::SuccessResponse('blokir berhasil diaktifkan', 'pendaftar-datatable');
         }
-        return AjaxResponse::ErrorResponse('blokir gagal di aktifkan', 400);
+        return AjaxResponse::ErrorResponse('blokir gagal diaktifkan', 400);
     }
+
 
     // close blokir
     public function OpenkAccessPendaftar(string $id): JsonResponse

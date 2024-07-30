@@ -1,7 +1,8 @@
 @extends('layouts.vertical.master')
 @section('title', 'Pendaftar')
 @push('css')
-    <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endpush
@@ -55,7 +56,8 @@
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label">UPT</label>
-                                                <select type="text" class="form-control upt-select-filter" id="filter-upt"></select>
+                                                <select type="text" class="form-control upt-select-filter"
+                                                    id="filter-upt"></select>
                                             </div>
                                         </div>
                                     @endif
@@ -74,7 +76,8 @@
                                 <h5></h5>
                             </div>
                             <div class="table-responsive">
-                                <table id="pendaftar-datatable" class="table table-bordered dt-responsive nowrap w-100" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <table id="pendaftar-datatable" class="table table-bordered dt-responsive nowrap w-100"
+                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -127,6 +130,31 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="button-tolak">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- modal diblock only --}}
+    <div class="modal fade" id="modal-blokir" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Keterangan Diblokir</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-blokir">
+                        <div class="mb-3">
+                            <input type="hidden" name="url" id="url-blokir">
+                            <input type="hidden" name="url" id="url-reloadd">
+                            <label for="exampleFormControlInput1" class="form-label">keterangan</label>
+                            <input type="text" class="form-control" id="keterangan-blok">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button-blok">Submit</button>
                 </div>
             </div>
         </div>

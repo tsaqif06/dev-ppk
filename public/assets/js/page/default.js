@@ -325,50 +325,98 @@ $("#button-tolak").click(function () {
     });
 });
 
+$("#button-blok").click(function () {
+    let linkReload = $("#url-reloadd").val();
+    $.ajax({
+        url: $("#url-blokir").val(),
+        type: "POST",
+        data: {
+            status: "DITOLAK",
+            keterangan: $("#keterangan-blok").val(),
+        },
+        success: function (response) {
+            $("#modal-blokir").modal("hide");
+            if (response.status) {
+                notif("warning", response.message);
+                TableReload(response.table);
+                if (linkReload) {
+                    ClosePageLink(linkReload);
+                }
+            } else {
+                notif("error", response.message);
+            }
+        },
+        error: function (response) {
+            $("#modal-blokir").modal("hide");
+            notif("error", response.message ?? "Account gagal di blokir");
+        },
+    });
+});
+
 function Block(url, type, urlReload) {
     Swal.fire({
         title: "Apa Anda Yakin?",
         text: "Anda ingin memblokir " + type,
         icon: "question",
-        // showCancelButton: true,
-        confirmButtonColor: "#d33",
-        // cancelButtonColor: "#d33",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
         confirmButtonText: "BLOKIR",
-        // cancelButtonText: "BLOCKIR",
+        cancelButtonText: "BATAL",
     }).then((result) => {
         if (result.isConfirmed) {
-            $.ajax({
-                url: url,
-                type: "POST",
-                data: {
-                    status: "BLOCKIR",
-                },
-                success: function (response) {
-                    if (response.status) {
-                        notif("info", response.message);
-                        TableReload(response.table);
-                        if (urlReload) {
-                            ClosePageLink(urlReload);
+            // Tampilkan modal keterangan
+            $("#url-blokir").val(url);
+            if (urlReload) {
+                $("#url-reloadd").val(urlReload);
+            }
+            $("#form-blokir").trigger("reset");
+            $("#modal-blokir").modal("show");
+
+            // Tambahkan event listener untuk submit form pada modal keterangan
+            $("#form-blokir").off('submit').on('submit', function (e) {
+                e.preventDefault();
+
+                // Ambil data keterangan
+                const keterangan = $("#keterangan-blok").val();
+
+                // Kirim permintaan AJAX
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {
+                        status: "BLOCKIR",
+                        keterangan: keterangan,
+                    },
+                    success: function (response) {
+                        if (response.status) {
+                            notif("info", response.message);
+                            TableReload(response.table);
+                            if (urlReload) {
+                                ClosePageLink(urlReload);
+                            }
+                        } else {
+                            notif("error", response.message);
                         }
-                    } else {
-                        notif("error", response.message);
-                    }
-                },
-                error: function (response) {
-                    notif(
-                        "error",
-                        response.message ?? "register gagal di blockir"
-                    );
-                },
+                    },
+                    error: function (response) {
+                        notif(
+                            "error",
+                            response.message ?? "register gagal di blockir"
+                        );
+                    },
+                });
+
+                // Tutup modal setelah submit
+                $("#modal-tolak-keterangan").modal("hide");
             });
         }
         if (result.dismiss === "cancel") {
-            $("#url-tolak").val(url);
-            $("#form-tolak").trigger("reset");
-            $("#modal-tolak-keterangan").modal("show");
+             // Canceled: Tidak ada aksi tambahan
         }
     });
 }
+
 
 function Open(url, type, urlReload) {
     Swal.fire({
