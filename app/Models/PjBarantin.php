@@ -58,6 +58,12 @@ class PjBarantin extends Model
         'is_active',
         'status_prioritas',
         'lingkup_aktifitas',
+
+        'rerata_frekuensi',
+        'daftar_komoditas',
+        'tempat_karantina',
+        'status_kepemilikan',
+        'nomor_registrasi',
     ];
 
 

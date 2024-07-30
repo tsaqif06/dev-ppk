@@ -7,14 +7,26 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#dokumen-pendukung" class="nav-link" data-toggle="tab">
+            <a href="#kegiatan-usaha" class="nav-link" data-toggle="tab">
                 <span class="step-number">02</span>
+                <span class="step-title">Kegiatan Usaha</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#sarana-prasarana" class="nav-link" data-toggle="tab">
+                <span class="step-number">03</span>
+                <span class="step-title">Sarana Prasarana</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#dokumen-pendukung" class="nav-link" data-toggle="tab">
+                <span class="step-number">04</span>
                 <span class="step-title">Dokumen Pendukung</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="#ketentuan-form" class="nav-link" data-toggle="tab">
-                <span class="step-number">03</span>
+                <span class="step-number">05</span>
                 <span class="step-title">Ketentuan</span>
             </a>
         </li>
@@ -75,11 +87,9 @@
                                 onchange="document.getElementById('nomer_dokumen').value = this.value;">
                             <div class="invalid-feedback" id="nomor_identitas-feedback"></div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="email" class="col-sm-3 col-form-label">NITKU</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="number" id="nitku" name="nitku">
+                        <div class="col">
+                            <input class="form-control" type="number" id="nitku" placeholder="NITKU"
+                                name="nitku">
                             <div class="invalid-feedback" id="nitku-feedback"></div>
                         </div>
                     </div>
@@ -285,6 +295,60 @@
                 </div>
             </form>
         </div>
+
+        <div class="tab-pane" id="kegiatan-usaha">
+            <hr style="border-top: 3px solid rgb(119, 59, 3);" class="mb-1" />
+            <label for="" class="form-label fw-bold h6 mt-0 mb-0">Kegiatan Usaha</label>
+            <hr class="mt-0 mb-3">
+            <form class="row" id="form-kegiatan">
+                <div class="form-group">
+                    <label for="rerata-frekuensi">Rerata frekuensi kegiatan dalam setahun</label>
+                    <input type="number" class="form-control" id="rerata-frekuensi" name="rerata_frekuensi"
+                        placeholder="... kali">
+                </div>
+                <div class="form-group">
+                    <label for="daftar-komoditas">Daftar Komoditas yang diusahakan</label>
+                    <textarea class="form-control" id="daftar-komoditas" name="daftar_komoditas" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="sarana-prasarana">
+            <hr style="border-top: 3px solid rgb(119, 59, 3);" class="mb-1" />
+            <label for="" class="form-label fw-bold h6 mt-0 mb-0">Sarana Prasarana</label>
+            <hr class="mt-0 mb-3">
+            <form class="row" id="form-sarpras">
+                <div class="form-group">
+                    <label>Memiliki tempat Tindakan karantina</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tindakan_karantina" id="karantina-ya"
+                            value="Ya">
+                        <label class="form-check-label" for="karantina-ya">
+                            Ya
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tindakan_karantina"
+                            id="karantina-tidak" value="Tidak">
+                        <label class="form-check-label" for="karantina-tidak">
+                            Tidak
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="status-kepemilikan">Status kepemilikan</label>
+                    <select class="form-control" id="status-kepemilikan" name="status_kepemilikan">
+                        <option value="Milik Sendiri">Milik Sendiri</option>
+                        <option value="Sewa">Sewa</option>
+                    </select>
+                </div>
+                <div class="form-group" id="nomor-registrasi-group" style="display: none;">
+                    <label for="nomor-registrasi">Nomor Registrasi/SK Instalasi Karantina</label>
+                    <input type="text" class="form-control" id="nomor-registrasi" name="nomor_registrasi">
+                </div>
+            </form>
+        </div>
+
         <div class="tab-pane" id="dokumen-pendukung">
             <hr style="border-top: 3px solid rgb(119, 59, 3);" class="mb-1" />
             <label for="" class="form-label fw-bold h6 mt-0 mb-0">Dokumen Pendukung</label>
@@ -309,7 +373,8 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="nomer_dokumen" class="form-label">Nomer Dokumen</label>
-                        <input type="number" class="form-control form-control-dokumen" id="nomer_dokumen" name="nomer_dokumen" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
+                        <input type="number" class="form-control form-control-dokumen" id="nomer_dokumen"
+                            name="nomer_dokumen" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
                         <div class="invalid-feedback" id="nomer_dokumen-feedback"></div>
 
                     </div>
@@ -348,6 +413,7 @@
                 </div>
             </div>
         </div>
+
         <div class="tab-pane" id="ketentuan-form">
             <div>
                 <p class="text-justify">

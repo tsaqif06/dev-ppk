@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Log;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Register;
 use App\Models\PjBarantin;
 use App\Models\PreRegister;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Helpers\AjaxResponse;
 use App\Models\BarantinCabang;
+use App\Mail\MailSendRejection;
 use App\Models\DokumenPendukung;
 use App\Helpers\JsonFilterHelper;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\BarantinApiHelper;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-use App\Models\User;
 use App\Mail\MailSendUsernamePassword;
-use App\Mail\MailSendRejection;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Database\Eloquent\Builder;
 use App\Helpers\Helper;
 
 class PermohonanController extends Controller
@@ -285,7 +286,6 @@ class PermohonanController extends Controller
         // Jika entitas Register tidak ditemukan
         return AjaxResponse::ErrorResponse('Data register tidak ditemukan', 400);
     }
-
 
     /**
      * Menghasilkan JSON response untuk DataTables yang menampilkan dokumen pendukung.
