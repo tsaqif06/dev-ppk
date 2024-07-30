@@ -75,14 +75,19 @@
                                 onchange="document.getElementById('nomer_dokumen').value = this.value;">
                             <div class="invalid-feedback" id="nomor_identitas-feedback"></div>
                         </div>
+                        <div class="col">
+                            <input class="form-control" type="number" id="nitku" placeholder="NITKU"
+                                name="nitku">
+                            <div class="invalid-feedback" id="nitku-feedback"></div>
+                        </div>
                     </div>
-                    <div class="row mb-3">
+                    {{--  <div class="row mb-3">
                         <label for="email" class="col-sm-3 col-form-label">NITKU</label>
                         <div class="col-sm-9">
                             <input class="form-control" type="number" id="nitku" name="nitku">
                             <div class="invalid-feedback" id="nitku-feedback"></div>
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="row mb-3">
                         <label for="upt" class="col-sm-3 col-form-label">Telephon</label>
                         <div class="col-sm-9">
@@ -309,7 +314,8 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="nomer_dokumen" class="form-label">Nomer Dokumen</label>
-                        <input type="number" class="form-control form-control-dokumen" id="nomer_dokumen" name="nomer_dokumen" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
+                        <input type="number" class="form-control form-control-dokumen" id="nomer_dokumen"
+                            name="nomer_dokumen" maxlength="16" oninput="this.value = this.value.slice(0, 16);">
                         <div class="invalid-feedback" id="nomer_dokumen-feedback"></div>
 
                     </div>
