@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Log;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Register;
 use App\Models\PjBarantin;
 use App\Models\PreRegister;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Helpers\AjaxResponse;
 use App\Models\BarantinCabang;
+use App\Mail\MailSendRejection;
 use App\Models\DokumenPendukung;
 use App\Helpers\JsonFilterHelper;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\BarantinApiHelper;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-use App\Models\User;
 use App\Mail\MailSendUsernamePassword;
-use App\Mail\MailSendRejection;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Database\Eloquent\Builder;
 
 class PermohonanController extends Controller
 {
@@ -200,26 +201,26 @@ class PermohonanController extends Controller
             'status' => 'required|in:DISETUJUI,DITOLAK',
             'keterangan' => 'nullable'
         ]);
-    
+
         $register = Register::with('preRegister')->find($id);
-    
+
         if ($register) {
             $res = $register->update($request->only(['status', 'keterangan']));
-            
+
             if ($res) {
                 $preRegister = $register->preRegister;
                 $email = $preRegister ? $preRegister->email : null;
-                $name = $preRegister ? $preRegister->nama : null; 
-    
+                $name = $preRegister ? $preRegister->nama : null;
+
                 if ($request->status === 'DISETUJUI') {
-                    $username = Str::upper(Str::random(6)); 
-                    $password = Str::random(8); 
-    
-                    if ($email && $name) { 
+                    $username = Str::upper(Str::random(6));
+                    $password = Str::random(8);
+
+                    if ($email && $name) {
                         $user = User::create([
-                            'id' => (string) Str::uuid(), 
-                            'nama' => $name, 
-                            'email' => $email, 
+                            'id' => (string) Str::uuid(),
+                            'nama' => $name,
+                            'email' => $email,
                             'username' => $username,
                             'role' => 'perorangan',
                             'status_user' => '1',
@@ -227,31 +228,31 @@ class PermohonanController extends Controller
                             'email_verified_at' => now(),
                             'remember_token' => Str::random(10),
                         ]);
-    
+
                         Mail::to($email)->send(new MailSendUsernamePassword($username, $password));
                     } else {
                         return AjaxResponse::ErrorResponse('Email address or name is missing', 400);
                     }
                 }
-    
+
                 // If rejected, send a rejection email
                 if ($request->status === 'DITOLAK') {
                     $reason = $request->keterangan ?: 'No reason provided'; // Use provided reason or default message
-    
+
                     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         Mail::to($email)->send(new MailSendRejection($reason));
                     } else {
-                        \Log::error('Invalid email address:', ['email' => $email]);
+                        Log::error('Invalid email address:', ['email' => $email]);
                     }
                 }
-    
+
                 return AjaxResponse::SuccessResponse('data register ' . $request->status, 'permohonan-datatable');
             }
             return AjaxResponse::ErrorResponse('register gagal diapprove', 400);
         }
         return AjaxResponse::ErrorResponse('data register tidak ditemukan', 400);
     }
-    
+
     /**
      * Menghasilkan JSON response untuk DataTables yang menampilkan dokumen pendukung.
      *
