@@ -1,8 +1,10 @@
 @extends('layouts.vertical.master')
 @section('title', 'Permohonan')
 @push('css')
-    <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endpush
 @section('content')
@@ -55,7 +57,8 @@
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label">UPT</label>
-                                                <select type="text" class="form-control upt-select-filter" id="filter-upt"></select>
+                                                <select type="text" class="form-control upt-select-filter"
+                                                    id="filter-upt"></select>
                                             </div>
                                         </div>
                                     @endif
@@ -73,7 +76,8 @@
                                 <h5></h5>
                             </div>
                             <div class="table-responsive">
-                                <table id="permohonan-datatable" class="table table-bordered dt-responsive nowrap w-100" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <table id="permohonan-datatable" class="table table-bordered dt-responsive nowrap w-100"
+                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -138,7 +142,14 @@
     <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/libs/moment/min/moment.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
     <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
+    <!-- DataTables Buttons JS -->
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 @endpush
 @push('custom-js')
     <script src="{{ asset('assets/js/page/filter.js') }}"></script>

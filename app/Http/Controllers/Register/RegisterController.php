@@ -97,6 +97,8 @@ class RegisterController extends Controller
      */
     public function StoreRegisterPerusahaan(RegisterRequestPerusahaanStore $request, string $id)
     {
+        // var_dump($request->input());
+        // die;
         $preRegister = PreRegister::find($id);
         $this->CheckRegister($preRegister);
         $dokumen = DokumenPendukung::where('pre_register_id', $id)->pluck('jenis_dokumen');
@@ -105,8 +107,8 @@ class RegisterController extends Controller
             return self::isPerusahaanInduk($dokumen, $request, $preRegister->id);
         }
         return self::isPerusahaanCabang($dokumen, $request, $preRegister->id);
-
     }
+
     public static function isPerusahaanInduk(Collect $dokumen, Request $request, string $preRegisterId): JsonResponse
     {
         if ($dokumen->contains('NPWP') && $dokumen->contains('NIB')) {
@@ -114,17 +116,19 @@ class RegisterController extends Controller
             self::saveBarantin($request->upt, $data);
             return response()->json(['status' => true, 'message' => 'Register Perusahaan induk Berhasil Dilakukan'], 200);
         }
-        return response()->json(['status' => false, 'message' => 'silahkan lengkapi dokumen  NPWP, NIB'], 422);
+        return response()->json(['status' => false, 'message' => 'silahkan lengkapi dokumen NPWP, NIB'], 422);
     }
-    public static function isPerusahaanCabang(Collect $dokumen, Request $request, string $preRegisterId)
+
+    public static function isPerusahaanCabang(Collect $dokumen, Request $request, string $preRegisterId): JsonResponse
     {
         if ($dokumen->contains('NITKU')) {
             $data = self::inputRender($request, $preRegisterId);
             self::saveBarantin($request->upt, $data);
             return response()->json(['status' => true, 'message' => 'Register Perusahaan cabang Berhasil Dilakukan'], 200);
         }
-        return response()->json(['status' => false, 'message' => 'silahkan lengkapi dokumen  NITKU'], 422);
+        return response()->json(['status' => false, 'message' => 'silahkan lengkapi dokumen NITKU'], 422);
     }
+
     /**
      * Menyimpan data registrasi perusahaan induk perorangan menggunakan transaksi database.
      * Fungsi ini bertanggung jawab untuk membuat entri baru untuk Pjbarantin dan memperbarui data pra-registrasi.
@@ -135,20 +139,24 @@ class RegisterController extends Controller
      */
     public static function saveBarantin(array $upt, array $data): void
     {
+        $data['tindakan_karantina'] = $data['tindakan_karantina'] == 'Ya';
         DB::transaction(
             function () use ($data, $upt) {
                 $barantin = PjBarantin::create($data);
                 PreRegister::find($data['pre_register_id'])->update(['nama' => $barantin->nama_perusahaan]);
                 foreach ($upt as $index => $value) {
-                    Register::updateOrCreate(['pre_register_id' => $data['pre_register_id'], 'master_upt_id' => $value], ['pj_barantin_id' => $barantin->id, 'status' => 'MENUNGGU', 'keterangan' => null]);
+                    Register::updateOrCreate(
+                        ['pre_register_id' => $data['pre_register_id'], 'master_upt_id' => $value],
+                        ['pj_barantin_id' => $barantin->id, 'status' => 'MENUNGGU', 'keterangan' => null]
+                    );
                 }
-                DokumenPendukung::where('pre_register_id', $data['pre_register_id'])->update(['pj_barantin_id' => $barantin->id, 'pre_register_id' => null]);
+                DokumenPendukung::where('pre_register_id', $data['pre_register_id'])
+                    ->update(['pj_barantin_id' => $barantin->id, 'pre_register_id' => null]);
             }
         );
-        return;
     }
 
-    public static function inputRender(Request $request, string $preRegisterId)
+    public static function inputRender(Request $request, string $preRegisterId): array
     {
         $request->merge([
             'negara_id' => 99,
@@ -159,8 +167,9 @@ class RegisterController extends Controller
             'lingkup_aktifitas' => implode(',', $request->lingkup_aktivitas),
         ]);
 
-        return $request->except(['upt', 'negara', 'provinsi', 'identifikasi_perusahaan', 'lingkup_aktivitas','ketentuan']);
+        return $request->except(['upt', 'negara', 'provinsi', 'identifikasi_perusahaan', 'lingkup_aktivitas', 'ketentuan']);
     }
+
     /**
      * Menyimpan dokumen pendukung ke dalam database.
      *
@@ -257,7 +266,7 @@ class RegisterController extends Controller
      *
      * @return View|JsonResponse
      */
-    public function StatusRegister()//: View|JsonResponse
+    public function StatusRegister() //: View|JsonResponse
     {
         if (request()->ajax()) {
             $model = Register::with([
@@ -285,7 +294,7 @@ class RegisterController extends Controller
                 ->filterColumn('kota', function ($query, $keyword) {
                     $kota = collect(BarantinApiHelper::getDataMasterKota()->original);
                     $idKota = JsonFilterHelper::searchDataByKeyword($kota, $keyword, 'nama')->pluck('id');
-                    $query->whereHas('barantin', fn($query) => $query->whereIn('kota', $idKota));
+                    $query->whereHas('barantin', fn ($query) => $query->whereIn('kota', $idKota));
                 })
                 ->addIndexColumn()->toJson();
         }

@@ -300,49 +300,53 @@
             <hr style="border-top: 3px solid rgb(119, 59, 3);" class="mb-1" />
             <label for="" class="form-label fw-bold h6 mt-0 mb-0">Kegiatan Usaha</label>
             <hr class="mt-0 mb-3">
-            <div class="form-group">
-                <label for="rerata-frekuensi">Rerata frekuensi kegiatan dalam setahun</label>
-                <input type="number" class="form-control" id="rerata-frekuensi" name="rerata-frekuensi"
-                    placeholder="... kali">
-            </div>
-            <div class="form-group">
-                <label for="daftar-komoditas">Daftar Komoditas yang diusahakan</label>
-                <textarea class="form-control" id="daftar-komoditas" name="daftar-komoditas" rows="3"></textarea>
-            </div>
+            <form class="row" id="form-kegiatan">
+                <div class="form-group">
+                    <label for="rerata-frekuensi">Rerata frekuensi kegiatan dalam setahun</label>
+                    <input type="number" class="form-control" id="rerata-frekuensi" name="rerata_frekuensi"
+                        placeholder="... kali">
+                </div>
+                <div class="form-group">
+                    <label for="daftar-komoditas">Daftar Komoditas yang diusahakan</label>
+                    <textarea class="form-control" id="daftar-komoditas" name="daftar_komoditas" rows="3"></textarea>
+                </div>
+            </form>
         </div>
 
         <div class="tab-pane" id="sarana-prasarana">
             <hr style="border-top: 3px solid rgb(119, 59, 3);" class="mb-1" />
             <label for="" class="form-label fw-bold h6 mt-0 mb-0">Sarana Prasarana</label>
             <hr class="mt-0 mb-3">
-            <div class="form-group">
-                <label>Memiliki tempat Tindakan karantina</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="tindakan-karantina" id="karantina-ya"
-                        value="Ya">
-                    <label class="form-check-label" for="karantina-ya">
-                        Ya
-                    </label>
+            <form class="row" id="form-sarpras">
+                <div class="form-group">
+                    <label>Memiliki tempat Tindakan karantina</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tindakan_karantina" id="karantina-ya"
+                            value="Ya">
+                        <label class="form-check-label" for="karantina-ya">
+                            Ya
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tindakan_karantina"
+                            id="karantina-tidak" value="Tidak">
+                        <label class="form-check-label" for="karantina-tidak">
+                            Tidak
+                        </label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="tindakan-karantina" id="karantina-tidak"
-                        value="Tidak">
-                    <label class="form-check-label" for="karantina-tidak">
-                        Tidak
-                    </label>
+                <div class="form-group">
+                    <label for="status-kepemilikan">Status kepemilikan</label>
+                    <select class="form-control" id="status-kepemilikan" name="status_kepemilikan">
+                        <option value="Milik Sendiri">Milik Sendiri</option>
+                        <option value="Sewa">Sewa</option>
+                    </select>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="status-kepemilikan">Status kepemilikan</label>
-                <select class="form-control" id="status-kepemilikan" name="status-kepemilikan">
-                    <option value="Milik Sendiri">Milik Sendiri</option>
-                    <option value="Sewa">Sewa</option>
-                </select>
-            </div>
-            <div class="form-group" id="nomor-registrasi-group" style="display: none;">
-                <label for="nomor-registrasi">Nomor Registrasi/SK Instalasi Karantina</label>
-                <input type="text" class="form-control" id="nomor-registrasi" name="nomor-registrasi">
-            </div>
+                <div class="form-group" id="nomor-registrasi-group" style="display: none;">
+                    <label for="nomor-registrasi">Nomor Registrasi/SK Instalasi Karantina</label>
+                    <input type="text" class="form-control" id="nomor-registrasi" name="nomor_registrasi">
+                </div>
+            </form>
         </div>
 
         <div class="tab-pane" id="dokumen-pendukung">

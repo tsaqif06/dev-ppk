@@ -25,10 +25,11 @@ $("#lingkup_aktivitas").change(function () {
 
 $("#file_dokumen").dropify();
 
-$('input[name="tindakan-karantina"]').on("change", function () {
+$('input[name="tindakan_karantina"]').on("change", function () {
     if ($(this).val() === "Ya") {
         $("#nomor-registrasi-group").show();
     } else {
+        $("#nomor-registrasi").val('');
         $("#nomor-registrasi-group").hide();
     }
 });
@@ -154,6 +155,8 @@ $("#button-submit").click(function () {
     let form_ttd = $("#form-penandatangan").serializeArray();
     let form_cp = $("#form-cp").serializeArray();
     let form_register = $("#form-register").serializeArray();
+    let form_kegiatan = $("#form-kegiatan").serializeArray();
+    let form_sarpras = $("#form-sarpras").serializeArray();
     let form_ketentuan = $("#form-ketentuan").serializeArray();
 
     $.each(form_ttd, function (key, value) {
@@ -163,6 +166,12 @@ $("#button-submit").click(function () {
         form_data.append(value.name, value.value);
     });
     $.each(form_register, function (key, value) {
+        form_data.append(value.name, value.value);
+    });
+    $.each(form_kegiatan, function (key, value) {
+        form_data.append(value.name, value.value);
+    });
+    $.each(form_sarpras, function (key, value) {
         form_data.append(value.name, value.value);
     });
     $.each(form_ketentuan, function (key, value) {
