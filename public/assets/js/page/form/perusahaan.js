@@ -25,6 +25,14 @@ $("#lingkup_aktivitas").change(function () {
 
 $("#file_dokumen").dropify();
 
+$('input[name="tindakan-karantina"]').on("change", function () {
+    if ($(this).val() === "Ya") {
+        $("#nomor-registrasi-group").show();
+    } else {
+        $("#nomor-registrasi-group").hide();
+    }
+});
+
 var phoneInput = $("#telepon");
 IMask(phoneInput[0], {
     mask: "0000-0000-0000",
