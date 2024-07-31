@@ -3,7 +3,7 @@
         <li class="nav-item">
             <a href="#seller-details" class="nav-link" data-toggle="tab">
                 <span class="step-number">01</span>
-                <span class="step-title">Register Pemohon</span>
+                <span class="step-title">Data Pemohon</span>
             </a>
         </li>
         <li class="nav-item">
@@ -34,7 +34,7 @@
     <div class="tab-content twitter-bs-wizard-tab-content">
         <div class="tab-pane" id="seller-details">
             <hr style="border-top: 3px solid rgb(119, 59, 3);" class="mb-1" />
-            <label for="" class="form-label fw-bold h6 mt-0 mb-0">Register Pemohon</label>
+            <label for="" class="form-label fw-bold h6 mt-0 mb-0">Data Pemohon</label>
             <hr class="mt-0 mb-3">
 
             <form class="row" id="form-register">
@@ -68,8 +68,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="jenis_identitas" class="col-md-3 col-sm-3 col-xs-12 col-form-label">Jenis
-                            Identitas</label>
+                        <label for="jenis_identitas" class="col-md-3 col-form-label">Jenis Identitas</label>
                         <div class="col">
                             <select class="form-control select-item" type="text" placeholder="Jenis Identitas"
                                 id="jenis_identitas" name="jenis_identitas">
@@ -78,7 +77,10 @@
                             </select>
                             <div class="invalid-feedback" id="jenis_identitas-feedback"></div>
                         </div>
+                    </div>
 
+                    <div class="row mb-3">
+                        <label for="nomor_identitas" class="col-md-3 col-form-label">Nomor Identitas</label>
                         <div class="col">
                             <input class="form-control" type="number" placeholder="Nomor Identitas"
                                 id="nomor_identitas" name="nomor_identitas"
@@ -89,10 +91,12 @@
                         </div>
                         <div class="col">
                             <input class="form-control" type="number" id="nitku" placeholder="NITKU"
-                                name="nitku">
+                                name="nitku" maxlength="6" 
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                             <div class="invalid-feedback" id="nitku-feedback"></div>
                         </div>
                     </div>
+
                     <div class="row mb-3">
                         <label for="upt" class="col-sm-3 col-form-label">Telephon</label>
                         <div class="col-sm-9">
