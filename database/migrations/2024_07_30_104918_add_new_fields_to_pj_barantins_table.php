@@ -29,7 +29,7 @@ class AddNewFieldsToPjBarantinsTable extends Migration
      */
     public function down()
     {
-        Schema::table('pj_barantin', function (Blueprint $table) {
+        Schema::table('pj_barantins', function (Blueprint $table) {
             $table->dropColumn('rerata_frekuensi');
             $table->dropColumn('daftar_komoditas');
             $table->dropColumn('tempat_karantina');
