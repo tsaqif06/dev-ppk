@@ -257,7 +257,6 @@ class PermohonanController extends Controller
                 ]);
 
                 // Buat pengguna baru
-                dd($userCollect->all());
                 $user = User::create($userCollect->all());
                 $barantin->update(['user_id' => $user->id]);
 
