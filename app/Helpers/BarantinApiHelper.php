@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class BarantinApiHelper
 {
-    private static $baseUrl = 'https://api.karantinaindonesia.go.id';
+    private static $baseUrl = 'http://api.karantinaindonesia.go.id:8080';
     private static $dataMasterUpt;
     private static $dataMasterNegara;
     private static $dataMasterProvinsi;

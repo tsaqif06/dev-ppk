@@ -29,7 +29,7 @@ $('input[name="tindakan_karantina"]').on("change", function () {
     if ($(this).val() === "Ya") {
         $("#nomor-registrasi-group").show();
     } else {
-        $("#nomor-registrasi").val('');
+        $("#nomor-registrasi").val("");
         $("#nomor-registrasi-group").hide();
     }
 });
@@ -149,6 +149,43 @@ $("#button-pendukung").click(function () {
     });
 });
 
+function combineKegiatanInputs() {
+    const data = {};
+
+    if (document.getElementById("hewan-hidup-checkbox").checked) {
+        data["hewan_hidup_keterangan"] =
+            document.getElementById("hewan-hidup-input").value;
+    }
+    if (document.getElementById("hewan-produk-checkbox").checked) {
+        data["hewan_produk_keterangan"] =
+            document.getElementById("hewan-produk-input").value;
+    }
+    if (document.getElementById("ikan-hidup-checkbox").checked) {
+        data["ikan_hidup_keterangan"] =
+            document.getElementById("ikan-hidup-input").value;
+    }
+    if (document.getElementById("ikan-segar-checkbox").checked) {
+        data["ikan_segar_keterangan"] =
+            document.getElementById("ikan-segar-input").value;
+    }
+    if (document.getElementById("ikan-produk-checkbox").checked) {
+        data["ikan_produk_keterangan"] =
+            document.getElementById("ikan-produk-input").value;
+    }
+    if (document.getElementById("tumbuhan-benih-checkbox").checked) {
+        data["tumbuhan_benih_keterangan"] = document.getElementById(
+            "tumbuhan-benih-input"
+        ).value;
+    }
+    if (document.getElementById("tumbuhan-nonbenih-checkbox").checked) {
+        data["tumbuhan_nonbenih_keterangan"] = document.getElementById(
+            "tumbuhan-nonbenih-input"
+        ).value;
+    }
+
+    return JSON.stringify(data);
+}
+
 $("#button-submit").click(function () {
     form_data = new FormData();
 
@@ -169,7 +206,9 @@ $("#button-submit").click(function () {
         form_data.append(value.name, value.value);
     });
     $.each(form_kegiatan, function (key, value) {
-        form_data.append(value.name, value.value);
+        if (value.name === "rerata_frekuensi") {
+            form_data.append(value.name, value.value);
+        }
     });
     $.each(form_sarpras, function (key, value) {
         form_data.append(value.name, value.value);
@@ -177,6 +216,8 @@ $("#button-submit").click(function () {
     $.each(form_ketentuan, function (key, value) {
         form_data.append(value.name, value.value);
     });
+
+    form_data.append("daftar_komoditas", combineKegiatanInputs());
 
     $.ajax({
         data: form_data,
