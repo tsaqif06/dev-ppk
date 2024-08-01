@@ -246,7 +246,6 @@ class PermohonanController extends Controller
                 if ($preRegister->pemohon === 'perusahaan') {
                     $role = ($preRegister->jenis_perusahaan === 'induk') ? 'induk' : 'cabang';
                 }
-
                 // Buat data pengguna
                 $userCollect = collect([
                     'nama' => $barantin->nama_perusahaan,
