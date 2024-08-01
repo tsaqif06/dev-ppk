@@ -110,9 +110,12 @@
             </div>
 
             <div class="form-group mt-4">
-                <a href="{{ asset('assets/docs/UserManual_RegPTKOnline_PenggunaJasa.pdf') }}" target="_blank" class="btn btn-link">
-                    <h5 class="text-center">Panduan Registrasi</h5>
-                </a>
+                <div class="text-center">
+                    <a href="{{ asset('assets/docs/UserManual_RegPTKOnline_PenggunaJasa.pdf') }}" target="_blank"
+                        class="btn btn-link">
+                        <h5 class="text-center">Panduan Registrasi</h5>
+                    </a>
+                </div>
                 {{-- <div class="text-center">
                     <a href="{{ asset('assets/docs/UserManual_RegPTKOnline_PenggunaJasa.pdf') }}" target="_blank" class="btn btn-link">Pengguna Jasa</a>
                     <a href="{{ asset('assets/docs/UserManual_RegPTKOnline_AdminPUSAT-UPT.pdf') }}" target="_blank"
