@@ -59,13 +59,28 @@
                     </div>
 
                     <div class="row mb-3">
+                        <label for="kategori_perusahaan" class="col-sm-3 col-form-label">Nama Perusahaan</label>
+                        <div class="col">
+                            <select id="kategori_perusahaan" class="form-select" name="kategori_perusahaan">
+                                <option value="PT" {{ $kategori_perusahaan == 'PT' ? 'selected' : '' }}>PT</option>
+                                <option value="CV" {{ $kategori_perusahaan == 'CV' ? 'selected' : '' }}>CV</option>
+                                <option value="UD" {{ $kategori_perusahaan == 'UD' ? 'selected' : '' }}>UD</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" value="{{ $nama_perusahaan }}" type="text" id="nama_perusahaan" name="nama_perusahaan">
+                            <div class="invalid-feedback" id="nama_perusahaan-feedback"></div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="row mb-3">
                         <label for="email" class="col-sm-3 col-form-label">Nama Perusahaan</label>
                         <div class="col-sm-9">
                             <input class="form-control" value="{{ $register->nama }}" type="text"
                                 id="nama_perusahaan" name="nama_perusahaan">
                             <div class="invalid-feedback" id="nama_perusahaan-feedback"></div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row mb-3">
                         <label for="jenis_identitas" class="col-md-3 col-sm-3 col-xs-12 col-form-label">Jenis

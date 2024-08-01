@@ -56,11 +56,30 @@ class RegisterController extends Controller
         $this->CheckRegister($register);
         $baratan = PjBaratanKpp::find($request->baratan_id) ?? null;
 
+        // Contoh pemisahan di controller
+        $nama = $register->nama;
+        $kategori_perusahaan = '';
+        $nama_perusahaan = '';
+
+        if (strpos($nama, 'PT') === 0) {
+            $kategori_perusahaan = 'PT';
+            $nama_perusahaan = trim(str_replace('PT', '', $nama), '. ');
+        } elseif (strpos($nama, 'CV') === 0) {
+            $kategori_perusahaan = 'CV';
+            $nama_perusahaan = trim(str_replace('CV', '', $nama), '. ');
+        } elseif (strpos($nama, 'UD') === 0) {
+            $kategori_perusahaan = 'UD';
+            $nama_perusahaan = trim(str_replace('UD', '', $nama), '. ');
+        } else {
+            $nama_perusahaan = trim($nama, '. ');
+        }
+
+
         $view = 'register.form.partial.perorangan';
         if ($register->pemohon === 'perusahaan') {
             $view = 'register.form.partial.perusahaan';
         }
-        return view($view, compact('register', 'baratan'));
+        return view($view, compact('register', 'baratan', 'kategori_perusahaan', 'nama_perusahaan'));
     }
     /**
      * Menyimpan data registrasi perorangan.
@@ -138,7 +157,8 @@ class RegisterController extends Controller
      * @param array $data Data yang akan disimpan
      */
     public static function saveBarantin(array $upt, array $data): void
-    {
+    {   
+        $data['nama_perusahaan'] = $data['kategori_perusahaan'] . ' ' . $data['nama_perusahaan'];
         $data['tindakan_karantina'] = $data['tindakan_karantina'] == 'Ya';
         DB::transaction(
             function () use ($data, $upt) {
