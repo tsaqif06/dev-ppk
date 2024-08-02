@@ -160,7 +160,7 @@ class RegisterController extends Controller
     {
         $data['nama_perusahaan'] = $data['kategori_perusahaan'] . ' ' . $data['nama_perusahaan'];
         $data['tindakan_karantina'] = $data['tindakan_karantina'] == 'Ya';
-        dd($data);
+        // dd($data);
         DB::transaction(
             function () use ($data, $upt) {
                 $barantin = PjBarantin::create($data);

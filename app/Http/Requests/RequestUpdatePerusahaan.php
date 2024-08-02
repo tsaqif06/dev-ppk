@@ -45,7 +45,7 @@ class RequestUpdatePerusahaan extends FormRequest
                 new UniquePerusahaanInduk(request()->input('identifikasi_perusahaan', true))
 
             ],
-            'telepon' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/',
+            'telepon' => 'required',
             'fax' => 'required|regex:/^\(\d{3}\) \d{3}-\d{4}$/',
 
             'email' => [
@@ -71,7 +71,7 @@ class RequestUpdatePerusahaan extends FormRequest
 
             'nama_cp' => 'required',
             'alamat_cp' => 'required',
-            'telepon_cp' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/',
+            'telepon_cp' => 'required',
 
             'nama_tdd' => 'required',
             'jenis_identitas_tdd' => ['required', Rule::in(['KTP', 'NPWP', 'PASSPORT'])],
