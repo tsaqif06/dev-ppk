@@ -34,7 +34,6 @@ class RegisterRequesPerorangantStore extends FormRequest
             'nomor_identitas' => [
                 'required',
                 'numeric',
-                'unique:pj_barantins,nomor_identitas',
                 new NomerIdentitasRule(request()->input('jenis_identitas'))
             ],
             'telepon' => 'required',
