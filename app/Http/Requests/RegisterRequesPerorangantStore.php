@@ -34,10 +34,9 @@ class RegisterRequesPerorangantStore extends FormRequest
             'nomor_identitas' => [
                 'required',
                 'numeric',
-                'unique:pj_barantins,nomor_identitas',
                 new NomerIdentitasRule(request()->input('jenis_identitas'))
             ],
-            'telepon' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/',
+            'telepon' => 'required',
             'fax' => 'required|regex:/^\(\d{3}\) \d{3}-\d{4}$/',
             'email' => 'required|exists:pre_registers,email',
             'lingkup_aktivitas' => [
@@ -50,7 +49,7 @@ class RegisterRequesPerorangantStore extends FormRequest
             'alamat' => 'required',
             'nama_cp' => 'required',
             'alamat_cp' => 'required',
-            'telepon_cp' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/',
+            'telepon_cp' => 'required',
             'nama_tdd' => 'required',
             'jenis_identitas_tdd' => ['required', Rule::in(['KTP', 'NPWP', 'PASSPORT'])],
             'nomor_identitas_tdd' => ['required', 'numeric', new NomerIdentitasRule(request()->input('jenis_identitas_tdd'))],

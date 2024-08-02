@@ -32,8 +32,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('datatable')->name('datatable.')->group(function () {
                 Route::get('/dokumen/{id}', [PermohonanController::class, 'datatablePendukung'])->name('pendukung');
             });
-            Route::get('/print/{id}', [PermohonanController::class, 'print'])->name('print');
             Route::post('/confirm/register/{id}', [PermohonanController::class, 'confirmRegister'])->name('confirm.register');
+            Route::get('/print/{id}', [PermohonanController::class, 'print'])->name('print');
         });
         Route::prefix('pendaftar')->name('pendaftar.')->group(function () {
             Route::prefix('datatable')->name('datatable.')->group(function () {

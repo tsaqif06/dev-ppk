@@ -40,10 +40,9 @@ class RegisterRequestPerusahaanStore extends FormRequest
                 'required',
                 'numeric',
                 new NomerIdentitasRule(request()->input('jenis_identitas')),
-                new UniquePerusahaanInduk(request()->input('identifikasi_perusahaan'))
 
             ],
-            'telepon' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/',
+            'telepon' => 'required',
             'fax' => 'required|regex:/^\(\d{3}\) \d{3}-\d{4}$/',
 
             'email' => 'required|exists:pre_registers,email',
@@ -55,7 +54,7 @@ class RegisterRequestPerusahaanStore extends FormRequest
                 $lingkup_aktivitas = request()->input('lingkup_aktivitas');
                 return $lingkup_aktivitas && in_array(3, $lingkup_aktivitas);
             }),
-            'nitku' => 'required_if:identifikasi_perusahaan,cabang|unique:pj_barantins,nitku',
+            'nitku' => 'required_if:identifikasi_perusahaan,cabang',
             'status_import' => ['required', Rule::in([25, 26, 27, 28, 29, 30, 31, 32])],
             // 'negara' => 'required|exists:master_negaras,id',
             'kota' => ['required', new KotaRule(request()->input('provinsi'))],
@@ -64,7 +63,7 @@ class RegisterRequestPerusahaanStore extends FormRequest
 
             'nama_cp' => 'required',
             'alamat_cp' => 'required',
-            'telepon_cp' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/',
+            'telepon_cp' => 'required',
 
             'nama_tdd' => 'required',
             'jenis_identitas_tdd' => ['required', Rule::in(['KTP', 'NPWP', 'PASSPORT'])],
@@ -76,8 +75,11 @@ class RegisterRequestPerusahaanStore extends FormRequest
             'jabatan_tdd' => 'required',
             'alamat_tdd' => 'required',
             'jenis_perusahaan' => 'required|in:PEMILIK BARANG,PPJK,EMKL,EMKU,LAINNYA',
-            'ketentuan' => 'required|in:ketentuan'
+            'ketentuan' => 'required|in:ketentuan',
 
+            'rerata_frekuensi' => 'required',
+            'daftar_komoditas' => 'required',
+            'status_kepemilikan' => 'required',
         ];
     }
 }

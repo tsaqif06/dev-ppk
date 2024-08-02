@@ -37,7 +37,6 @@ class RequestUpdatePerorangan extends FormRequest
             'nomor_identitas' => [
                 'required',
                 'numeric',
-                'unique:pj_baratins,nomor_identitas,' . $this->route('id'),
                 new NomerIdentitasRule(request()->input('jenis_identitas'))
             ],
             'telepon' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/',
@@ -45,8 +44,6 @@ class RequestUpdatePerorangan extends FormRequest
             'email' => [
                 'required',
                 'email',
-                Rule::unique('pj_baratins', 'email')->ignore($pjBarantinId),
-                Rule::unique('pre_registers', 'email')->ignore($preRegisterId),
             ],
             'lingkup_aktivitas' => [
                 'required',
