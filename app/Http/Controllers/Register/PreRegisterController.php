@@ -62,12 +62,14 @@ class PreRegisterController extends Controller
         $data = $request->except('kategori_perusahaan'); // Hapus kategori_perusahaan dari data
         $data['nama'] = $namaPerusahaan; // Gabungkan dan simpan nama perusahaan
         $data['verify_email'] = null; // Atur verify_email ke null jika diperlukan
+        $data['email'] = $request->email;
 
         // Simpan atau perbarui data
-        $preregister = PreRegister::updateOrCreate(
-            ['email' => $request->email],
-            $data
-        );
+        // $preregister = PreRegister::updateOrCreate(
+        //     ['email' => $request->email],
+        //     $data
+        // );
+        $preregister = PreRegister::create($data);
 
         // Lanjutkan proses pendaftaran
         return $this->saveRegister($preregister, $request);

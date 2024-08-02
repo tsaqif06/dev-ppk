@@ -43,7 +43,7 @@ class RegisterRequestPerusahaanStore extends FormRequest
                 new UniquePerusahaanInduk(request()->input('identifikasi_perusahaan'))
 
             ],
-            'telepon' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/',
+            'telepon' => 'required',
             'fax' => 'required|regex:/^\(\d{3}\) \d{3}-\d{4}$/',
 
             'email' => 'required|exists:pre_registers,email',
@@ -64,7 +64,7 @@ class RegisterRequestPerusahaanStore extends FormRequest
 
             'nama_cp' => 'required',
             'alamat_cp' => 'required',
-            'telepon_cp' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/',
+            'telepon_cp' => 'required',
 
             'nama_tdd' => 'required',
             'jenis_identitas_tdd' => ['required', Rule::in(['KTP', 'NPWP', 'PASSPORT'])],
@@ -76,8 +76,11 @@ class RegisterRequestPerusahaanStore extends FormRequest
             'jabatan_tdd' => 'required',
             'alamat_tdd' => 'required',
             'jenis_perusahaan' => 'required|in:PEMILIK BARANG,PPJK,EMKL,EMKU,LAINNYA',
-            'ketentuan' => 'required|in:ketentuan'
+            'ketentuan' => 'required|in:ketentuan',
 
+            'rerata_frekuensi' => 'required',
+            'daftar_komoditas' => 'required',
+            'status_kepemilikan' => 'required',
         ];
     }
 }
