@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SelectController;
 use App\Http\Controllers\ExampleFetchDataFromAPi;
+use App\Http\Controllers\Admin\PermohonanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,6 @@ require_once __DIR__ . '/admin.php';
 require_once __DIR__ . '/register.php';
 require_once __DIR__ . '/user.php';
 
-
 Route::prefix('select')->name('select.')->group(function () {
     Route::get('upt', [SelectController::class, 'SelectUpt'])->name('upt');
     Route::get('negara', [SelectController::class, 'SelectNegara'])->name('negara');
@@ -43,7 +43,6 @@ Route::get('ajax/failed', function () {
         return response()->json(['message' => 'Unauthorized', 'code' => 401, 'status' => "failed"], 401);
     }
     return redirect()->route('login');
-
 })->middleware(['ajax', 'guest'])->name('ajax.failed');
 
 
@@ -59,5 +58,3 @@ Route::get('link', function () {
     Artisan::call('storage:link');
 });
 /* only test */
-
-

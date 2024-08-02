@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Log;
+use Mpdf\Mpdf;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Helpers\Helper;
 use App\Models\Register;
+use Barryvdh\DomPDF\PDF;
 use App\Models\PjBarantin;
 use App\Models\PreRegister;
 use Illuminate\Support\Str;
@@ -22,9 +25,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailSendUsernamePassword;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Database\Eloquent\Builder;
-use App\Helpers\Helper;
 
 class PermohonanController extends Controller
 {
@@ -218,6 +221,39 @@ class PermohonanController extends Controller
             return response()->json(['table' => 'pendaftar-datatable', 'nama' => $user->nama]);
         }
         return true;
+    }
+
+    public function print($id)
+    {
+        dd($id);
+    }
+
+    public function prinst($id)
+    {
+        // return response()->json($id);
+        $permohonan = Register::with('barantin')->findOrFail($id);
+        $permohonan = $permohonan->barantin;
+        // $permohonan = ["test", "tr"];
+        // $permohonan = ["message" => "Data retrieved successfully", "data" => ["test", "tr"]];
+
+        if (!$permohonan) {
+            return abort(404, 'Permohonan tidak ditemukan');
+        }
+
+        $data = [
+            'id' => $id,
+            'nama_pengguna' => $permohonan->nama_cp,
+            'alamat_pengguna' => $permohonan->alamat_cp,
+            'nama_perusahaan' => $permohonan->nama_perusahaan,
+            'nomor_identitas' => $permohonan->nomor_identitas,
+            'nitku' => $permohonan->nitku,
+            'telepon_pengguna' => $permohonan->telepon_cp,
+            'jabatan' => $permohonan->jabatan_tdd,
+            'email' => $permohonan->email,
+        ];
+        $pdf = SnappyPdf::loadView('admin.permohonan.print', compact('data'));
+
+        return $pdf->stream('permohonan_' . $permohonan->id . '.pdf');
     }
 
     public function confirmRegister(string $id, Request $request): JsonResponse
