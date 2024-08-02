@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Helpers\Helper;
 use App\Models\Register;
-use Barryvdh\DomPDF\PDF;
+// use Barryvdh\DomPDF\PDF;
 use App\Models\PjBarantin;
 use App\Models\PreRegister;
 use Illuminate\Support\Str;
@@ -223,12 +223,12 @@ class PermohonanController extends Controller
         return true;
     }
 
-    public function print($id)
-    {
-        dd($id);
-    }
+    // public function print($id)
+    // {
+    //     dd("Print method called with ID: " . $id);
+    // }
 
-    public function prinst($id)
+    public function print($id)
     {
         // return response()->json($id);
         $permohonan = Register::with('barantin')->findOrFail($id);
