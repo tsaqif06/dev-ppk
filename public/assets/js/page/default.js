@@ -265,6 +265,10 @@ function ConfirmRegister(url, type, urlReload) {
             $.ajax({
                 url: url,
                 type: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
                 data: {
                     status: "DISETUJUI",
                 },
@@ -282,7 +286,7 @@ function ConfirmRegister(url, type, urlReload) {
                 error: function (response) {
                     notif(
                         "error",
-                        response.message ?? "register gagal di aprove"
+                        response.message ?? "Register gagal diapprove"
                     );
                 },
             });
@@ -412,7 +416,7 @@ function Block(url, type, urlReload) {
             });
         }
         if (result.dismiss === "cancel") {
-             // Canceled: Tidak ada aksi tambahan
+            // Canceled: Tidak ada aksi tambahan
         }
     });
 }
