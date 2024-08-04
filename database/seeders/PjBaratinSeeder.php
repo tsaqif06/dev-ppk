@@ -31,7 +31,6 @@ class PjBaratinSeeder extends Seeder
         foreach (range(1, 50) as $index => $value) {
             // $provinsi_id = $faker->numberBetween(1, 34); // assuming 34 provinces in Indonesia
             DB::transaction(function () use ($faker, $pemohon, $index, $emailUse) {
-
                 $jenis_pemohon = $index <= 1 ? ($index === 0 ? 'perusahaan' : 'perorangan') : $faker->randomElement($pemohon);
                 $nama = $faker->name;
                 $email = $index <= 1 ? $emailUse[$index] : $faker->unique()->safeEmail;

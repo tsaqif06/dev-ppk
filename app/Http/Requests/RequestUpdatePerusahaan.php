@@ -2,15 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Models\PengajuanUpdatePj;
 use App\Rules\KotaRule;
 use App\Models\PjBarantin;
 use App\Rules\ProvinsiRule;
 use Illuminate\Validation\Rule;
-use App\Models\PengajuanUpdatePj;
 use App\Rules\NomerIdentitasRule;
 use App\Rules\LingkupAktifitasRule;
 use App\Rules\UniquePerusahaanInduk;
-use App\Rules\UniqueNomorIdentitasNitku;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RequestUpdatePerusahaan extends FormRequest
@@ -43,7 +42,6 @@ class RequestUpdatePerusahaan extends FormRequest
                 'required',
                 'numeric',
                 new NomerIdentitasRule(request()->input('jenis_identitas')),
-                new UniqueNomorIdentitasNitku(request()->input('nomor_identitas'), request()->input('nitku'))
 
             ],
             'telepon' => 'required',

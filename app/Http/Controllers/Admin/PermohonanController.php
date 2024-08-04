@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Helpers\Helper;
 use App\Models\Register;
-// use Barryvdh\DomPDF\PDF;
 use App\Models\PjBarantin;
 use App\Models\PreRegister;
 use Illuminate\Support\Str;
@@ -37,7 +36,7 @@ class PermohonanController extends Controller
     private $uptPusatId;
     public function __construct()
     {
-        $this->middleware('ajax')->except('index');
+        $this->middleware('ajax')->except(['index','print']);
         $this->uptPusatId = env('UPT_PUSAT_ID', 1000);
     }
     public function index(): View|JsonResponse
@@ -232,13 +231,10 @@ class PermohonanController extends Controller
     {
         // return response()->json($id);
         $permohonan = Register::with('barantin')->findOrFail($id);
+
         $permohonan = $permohonan->barantin;
         // $permohonan = ["test", "tr"];
         // $permohonan = ["message" => "Data retrieved successfully", "data" => ["test", "tr"]];
-
-        if (!$permohonan) {
-            return abort(404, 'Permohonan tidak ditemukan');
-        }
 
         $data = [
             'id' => $id,
@@ -253,7 +249,7 @@ class PermohonanController extends Controller
         ];
         $pdf = SnappyPdf::loadView('admin.permohonan.print', compact('data'));
 
-        return $pdf->stream('permohonan_' . $permohonan->id . '.pdf');
+        return $pdf->download('permohonan_' . $permohonan->id . '.pdf');
     }
 
     public function confirmRegister(string $id, Request $request): JsonResponse
